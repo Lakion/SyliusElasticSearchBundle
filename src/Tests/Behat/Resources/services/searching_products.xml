@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="lakion_sylius_elastic_search.context.setup.product" class="Lakion\SyliusElasticSearchBundle\Tests\Behat\Context\Setup\ProductContext">
+            <argument type="service" id="__symfony__.sylius.fixture.product" />
+            <argument type="service" id="__symfony__.sylius.fixture.product_option" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="lakion_sylius_elastic_search.context.ui.shop.product" class="Lakion\SyliusElasticSearchBundle\Tests\Behat\Context\Ui\Shop\ProductContext">
+            <argument type="service" id="lakion_sylius_elastic_search.page.shop.product.index" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="lakion_sylius_elastic_search.page.shop.product.index" class="Lakion\SyliusElasticSearchBundle\Tests\Behat\Page\Shop\Product\IndexPage" parent="sylius.behat.page.shop.product.index" />
+    </services>
+</container>

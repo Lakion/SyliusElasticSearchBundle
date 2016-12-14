@@ -1,0 +1,2 @@
+imports:
+    - suites/shop/ui/product/searching_products.yml
