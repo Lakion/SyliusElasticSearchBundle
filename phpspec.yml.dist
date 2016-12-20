@@ -1,0 +1,2 @@
+suites:
+    SyliusElasticSearchBundle: { namespace: Lakion\SyliusElasticSearchBundle, psr4_prefix: Lakion\SyliusElasticSearchBundle, spec_path: src, src_path: src }
