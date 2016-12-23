@@ -2,6 +2,8 @@
 
 namespace Lakion\SyliusElasticSearchBundle;
 
-final class LakionSyliusElasticSearchBundle
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+final class LakionSyliusElasticSearchBundle extends Bundle
 {
 }

@@ -1,6 +1,6 @@
 default:
     suites:
-        ui_shop_searching_product:
+        domain_shop_searching_product:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
 
@@ -12,7 +12,6 @@ default:
                 - sylius.behat.context.setup.product_option
                 - sylius.behat.context.setup.taxonomy
 
-                - sylius.behat.context.ui.shop.product
-                - lakion_sylius_elastic_search.context.ui.shop.product
+                - lakion_sylius_elastic_search.context.domain.shop.product
             filters:
-                tags: "@searching_products && @ui && @elastic_search"
+                tags: "@searching_products && @domain && @elastic_search"

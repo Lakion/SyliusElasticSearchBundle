@@ -1,11 +1,11 @@
 <?php
 
-namespace spec\Lakion\SyliusElasticSearchBundle\Controller;
+namespace spec\Lakion\SyliusElasticSearchBundle\Search\Criteria;
 
-use Lakion\SyliusElasticSearchBundle\Controller\Criteria;
-use Lakion\SyliusElasticSearchBundle\Controller\Filtering;
-use Lakion\SyliusElasticSearchBundle\Controller\Ordering;
-use Lakion\SyliusElasticSearchBundle\Controller\Paginating;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Ordering;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Paginating;
 use PhpSpec\ObjectBehavior;
 
 /**

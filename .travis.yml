@@ -20,5 +20,5 @@ install:
     - composer update --prefer-dist
 
 script:
-
+    - bin/behat
     - bin/phpspec run

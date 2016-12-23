@@ -53,7 +53,6 @@ final class ProductContext implements Context
         );
 
         $this->loadNumberOfCustomProducts($number, [
-            'taxons' => [$taxon],
             'product_options' => ['t_shirt_color']
         ]);
     }
@@ -72,7 +71,6 @@ final class ProductContext implements Context
         ]);
 
         $this->loadNumberOfCustomProducts($number, [
-            'taxons' => [$taxon],
             'product_options' => ['t_shirt_color']
         ]);
     }
