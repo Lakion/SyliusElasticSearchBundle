@@ -4,6 +4,8 @@ default:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
 
+                - sylius.behat.context.transform.product
+                - sylius.behat.context.transform.shared_storage
                 - sylius.behat.context.transform.taxon
 
                 - lakion_sylius_elastic_search.context.setup.product
@@ -14,4 +16,4 @@ default:
 
                 - lakion_sylius_elastic_search.context.domain.shop.product
             filters:
-                tags: "@searching_products && @domain && @elastic_search"
+                tags: "@searching_products && @domain"

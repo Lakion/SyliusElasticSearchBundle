@@ -26,9 +26,6 @@ before_install:
     - composer self-update
     - composer validate
 
-    - elasticsearch -v
-    - sudo elasticsearch start
-
 install:
     - composer update --prefer-dist
     - src/Tests/Application/bin/console doctrine:schema:create --env=test -vvv --no-interaction

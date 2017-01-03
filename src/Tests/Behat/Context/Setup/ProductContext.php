@@ -13,7 +13,6 @@ namespace Lakion\SyliusElasticSearchBundle\Tests\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Sylius\Bundle\FixturesBundle\Fixture\FixtureInterface;
-use Sylius\Component\Core\Model\TaxonInterface;
 
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
@@ -23,106 +22,39 @@ final class ProductContext implements Context
     /**
      * @var FixtureInterface
      */
-    private $productFixture;
+    private $bookProductFixture;
 
     /**
      * @var FixtureInterface
      */
-    private $productOptionFixture;
+    private $mugProductFixture;
 
     /**
-     * @param FixtureInterface $productFixture
-     * @param FixtureInterface $productOptionFixture
+     * @var FixtureInterface
      */
-    public function __construct(FixtureInterface $productFixture, FixtureInterface $productOptionFixture)
-    {
-        $this->productFixture = $productFixture;
-        $this->productOptionFixture = $productOptionFixture;
+    private $stickerProductFixture;
+
+    /**
+     * @param FixtureInterface $bookProductFixture
+     * @param FixtureInterface $mugProductFixture
+     * @param FixtureInterface $stickerProductFixture
+     */
+    public function __construct(
+        FixtureInterface $bookProductFixture,
+        FixtureInterface $mugProductFixture,
+        FixtureInterface $stickerProductFixture
+    ) {
+        $this->bookProductFixture = $bookProductFixture;
+        $this->mugProductFixture = $mugProductFixture;
+        $this->stickerProductFixture = $stickerProductFixture;
     }
 
     /**
-     * @Given the store has a product option :optionName with a code :optionCode and :firstOptionValue, :secondOptionValue and :thirdOptionValue values
+     * @Given the store has about :mugsNumber Mugs, :stickersNumber Stickers and :booksNumber Books
      */
-    public function theStoreHasAProductOptionWithACodeAndAndValues($optionName, $optionCode, ... $values)
+    public function theStoreHasAboutMugsAndStickers($mugsNumber, $stickersNumber, $booksNumber)
     {
-        $options = [];
-        foreach ($values as $value) {
-            $options[sprintf('%s_%s', $optionCode, $value)] = $value;
-        }
-
-        $this->loadCustomProductOptions($optionCode, $optionName, $options);
-    }
-
-    /**
-     * @Given the store has a lot of :type with different color :number of them are :color
-     */
-    public function theStoreHasALotOfWithDifferentColor($number, $color)
-    {
-        $this->loadNumberOfRandomProducts(10);
-        $this->loadCustomProductOptions(
-            't_shirt_color',
-            'T-Shirt color',
-            [sprintf('t_shirt_color_%s', $color) => $color,]
-        );
-
-        $this->loadNumberOfCustomProducts($number, [
-            'product_options' => ['t_shirt_color']
-        ]);
-    }
-
-    /**
-     * @Given the store has a lot of :taxon with black, gray, red color :number of them are :color
-     */
-    public function theStoreHasALotOfWithBlackGrayRedColorOfThemAreBlue(TaxonInterface $taxon, $number, $color)
-    {
-        $this->loadNumberOfRandomProducts(10);
-        $this->loadCustomProductOptions('t_shirt_color', 'T-Shirt color', [
-            't_shirt_color_black' => 'Black',
-            't_shirt_color_gray' => 'Gray',
-            't_shirt_color_white' => 'Red',
-            sprintf('t_shirt_color_%s', $color) => $color,
-        ]);
-
-        $this->loadNumberOfCustomProducts($number, [
-            'product_options' => ['t_shirt_color']
-        ]);
-    }
-
-    /**
-     * @param int $number
-     */
-    private function loadNumberOfRandomProducts($number)
-    {
-        $this->productFixture->load([
-            'random' => (int) $number,
-        ]);
-    }
-
-    /**
-     * @param int $number
-     * @param array $values
-     */
-    private function loadNumberOfCustomProducts($number, array $values)
-    {
-        $this->productFixture->load([
-            'random' => (int) $number,
-            'prototype' => $values,
-        ]);
-    }
-
-    /**
-     * @param string $code
-     * @param string $name
-     * @param array $values
-     */
-    private function loadCustomProductOptions($code, $name, array $values)
-    {
-        $this->productOptionFixture->load(['custom' => [
-            [
-                'name' => $name,
-                'code' => $code,
-                'values' => $values,
-            ],
-        ]]);
+        $this->mugProductFixture->load(['amount' => (int) $mugsNumber]);
+        $this->stickerProductFixture->load(['amount' => (int) $stickersNumber]);
     }
 }

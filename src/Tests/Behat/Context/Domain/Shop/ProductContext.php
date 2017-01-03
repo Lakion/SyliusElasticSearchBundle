@@ -45,27 +45,53 @@ final class ProductContext implements Context
     }
 
     /**
-     * @When I filter them by :firstOptionValue color
-     * @When I filter them by :firstOptionValue and :secondOptionValue color
-     * @When I filter them by :firstOptionValue :secondOptionValue and :thirdOptionValue color
+     * @When I filter them by :mugTypeValue mug type
      */
-    public function iFilterThemByBlueColor(... $optionValues)
+    public function iFilterThemByDoubleMugType($mugTypeValue)
     {
-        $singleStringValue = '';
-        foreach ($optionValues as $optionValue) {
-            $singleStringValue .= sprintf('t_shirt_color_%s+', $optionValue);
-        }
-
-        $criteria = Criteria::fromQueryParameters(Product::class, ['product_option_code' => $singleStringValue]);
+        $criteria = Criteria::fromQueryParameters(Product::class, ['product_option_code' => sprintf('mug_type_%s', $mugTypeValue)]);
         $result = $this->searchEngine->match($criteria);
 
         $this->sharedStorage->set('search_result', $result);
     }
 
     /**
-     * @Then I should see :numberOfProducts products in the list
+     * @When I filter them by :mugTypeValue mug type and sticker size :stickerSizeValue
      */
-    public function iShouldSeeProductsInTheList($numberOfProducts)
+    public function iFilterThemByDoubleMugTypeAndStickerSize($mugTypeValue, $stickerSizeValue)
+    {
+        $criteria = Criteria::fromQueryParameters(Product::class, ['product_option_code' => sprintf('mug_type_%s+sticker_size_%s', $mugTypeValue, $stickerSizeValue)]);
+        $result = $this->searchEngine->match($criteria);
+
+        $this->sharedStorage->set('search_result', $result);
+    }
+
+    /**
+     * @When I filter them by stickier size :stickerSizeValue
+     */
+    public function iFilterThemByStickierSize($stickerSizeValue)
+    {
+        $criteria = Criteria::fromQueryParameters(Product::class, ['product_option_code' => sprintf('sticker_size_%s', $stickerSizeValue)]);
+        $result = $this->searchEngine->match($criteria);
+
+        $this->sharedStorage->set('search_result', $result);
+    }
+
+    /**
+     * @When I view the list of the products without filtering
+     */
+    public function iViewTheListOfTheProductsWithoutFiltering()
+    {
+        $criteria = Criteria::fromQueryParameters(Product::class, []);
+        $result = $this->searchEngine->match($criteria);
+
+        $this->sharedStorage->set('search_result', $result);
+    }
+
+    /**
+     * @Then I should see :numberOfProducts products on the list
+     */
+    public function iShouldSeeProductsOnTheList($numberOfProducts)
     {
         /** @var PaginatorAdapterInterface $result */
         $result = $this->sharedStorage->get('search_result');
