@@ -17,7 +17,6 @@ use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\Product;
-use Sylius\Component\Core\Model\TaxonInterface;
 use Webmozart\Assert\Assert;
 
 /**
@@ -46,11 +45,18 @@ final class ProductContext implements Context
     }
 
     /**
-     * @When I filter them by :optionValue :optionName in taxon :taxon
+     * @When I filter them by :firstOptionValue color
+     * @When I filter them by :firstOptionValue and :secondOptionValue color
+     * @When I filter them by :firstOptionValue :secondOptionValue and :thirdOptionValue color
      */
-    public function iFilterThemByBlueColor($optionValue, $optionName, TaxonInterface $taxon)
+    public function iFilterThemByBlueColor(... $optionValues)
     {
-        $criteria = Criteria::fromQueryParameters(Product::class, ['product_option_code' => sprintf('t_shirt_%s_%s', $optionName, $optionValue), 'product_option_value' => $optionValue, 'taxon_code' => $taxon->getCode()]);
+        $singleStringValue = '';
+        foreach ($optionValues as $optionValue) {
+            $singleStringValue .= sprintf('t_shirt_color_%s+', $optionValue);
+        }
+
+        $criteria = Criteria::fromQueryParameters(Product::class, ['product_option_code' => $singleStringValue]);
         $result = $this->searchEngine->match($criteria);
 
         $this->sharedStorage->set('search_result', $result);

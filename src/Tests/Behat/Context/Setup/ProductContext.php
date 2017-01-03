@@ -41,9 +41,22 @@ final class ProductContext implements Context
     }
 
     /**
-     * @Given the store has a lot of :taxon with different color :number of them are :color
+     * @Given the store has a product option :optionName with a code :optionCode and :firstOptionValue, :secondOptionValue and :thirdOptionValue values
      */
-    public function theStoreHasALotOfWithDifferentColor(TaxonInterface $taxon, $number, $color)
+    public function theStoreHasAProductOptionWithACodeAndAndValues($optionName, $optionCode, ... $values)
+    {
+        $options = [];
+        foreach ($values as $value) {
+            $options[sprintf('%s_%s', $optionCode, $value)] = $value;
+        }
+
+        $this->loadCustomProductOptions($optionCode, $optionName, $options);
+    }
+
+    /**
+     * @Given the store has a lot of :type with different color :number of them are :color
+     */
+    public function theStoreHasALotOfWithDifferentColor($number, $color)
     {
         $this->loadNumberOfRandomProducts(10);
         $this->loadCustomProductOptions(

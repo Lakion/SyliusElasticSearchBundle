@@ -7,20 +7,22 @@ Feature: Filtering list of products by options
     Background:
         Given the store operates on a single channel in "United States"
         And the store classifies its products as "T-shirts"
+        And the store has a product option "color" with a code "t_shirt_color" and "red", "blue" and "yellow" values
         And the store has a lot of "T-shirts" with different color 3 of them are red
+        And the store has a lot of Hoodies with different color 5 of them are blue
+        And the store has a lot of Jeans with different color 10 of them are yellow
 
     @domain
     Scenario: Filtering products by their color
-        When I filter them by red color in taxon "T-shirts"
+        When I filter them by red color
         Then I should see 3 products in the list
 
-    @todo
+    @domain
     Scenario: Filtering product by their color
-        When I view newest products from taxon "Hoodies"
-        And I filter them by blue color
-        Then I should see 4 products in the list
+        When I filter them by red and blue color
+        Then I should see 8 products in the list
 
-    @todo
-    Scenario: Being able to filter only by existing options
-        When I view newest products from taxon "Hoodies"
-        Then I should be able to filter by green, red, black and blue color
+    @domain
+    Scenario: Filtering product by their color
+        When I filter them by red blue and yellow color
+        Then I should see 18 products in the list
