@@ -3,7 +3,7 @@
 namespace spec\Lakion\SyliusElasticSearchBundle\Search\Elastic\Specification;
 
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
-use Lakion\SyliusElasticSearchBundle\Search\Elastic\Specification\HasProductOption;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Specification\ProductHasOptionValue;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Specification\SpecificationInterface;
 use ONGR\ElasticsearchDSL\Query\NestedQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
@@ -16,7 +16,7 @@ final class ProductHasOptionValueSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType(HasProductOption::class);
+        $this->shouldHaveType(ProductHasOptionValue::class);
     }
 
     function it_is_specification()

@@ -5,6 +5,11 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <imports>
-        <import resource="services/search.xml"/>
+        <import resource="services/search_builder.xml"/>
+        <import resource="services/search_engine.xml"/>
+        <import resource="services/search_specification.xml"/>
     </imports>
+    <services>
+        <service id="lakion_sylius_elastic_search.factory.search" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\SearchFactory" />
+    </services>
 </container>
