@@ -9,7 +9,7 @@ use ONGR\ElasticsearchDSL\Query\TermQuery;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class HasProductOption implements SpecificationInterface
+final class ProductHasOptionValue implements SpecificationInterface
 {
     /**
      * {@inheritdoc}

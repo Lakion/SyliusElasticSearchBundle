@@ -12,7 +12,7 @@ use PhpSpec\ObjectBehavior;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class HasProductOptionSpec extends ObjectBehavior
+final class ProductHasOptionValueSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
