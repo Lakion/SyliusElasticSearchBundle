@@ -55,7 +55,7 @@ final class ProductContext implements Context
     }
 
     /**
-     * @When I filter them by :mugTypeValue mug type and sticker size :stickerSizeValue
+     * @When I filter them by :mugTypeValue mug type or sticker size :stickerSizeValue
      */
     public function iFilterThemByDoubleMugTypeAndStickerSize($mugTypeValue, $stickerSizeValue)
     {

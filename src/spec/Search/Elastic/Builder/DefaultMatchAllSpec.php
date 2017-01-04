@@ -30,7 +30,7 @@ final class DefaultMatchAllSpec extends ObjectBehavior
         $this->shouldImplement(BuilderInterface::class);
     }
 
-    function it_supports_criteria_if_them_satisfies_specification(SpecificationInterface $specification)
+    function it_supports_criteria_if_they_satisfies_specification(SpecificationInterface $specification)
     {
         $criteria = Criteria::fromQueryParameters('product', []);
         $specification->satisfies($criteria)->willReturn(true);
@@ -38,7 +38,7 @@ final class DefaultMatchAllSpec extends ObjectBehavior
         $this->supports($criteria)->shouldReturn(true);
     }
 
-    function it_does_not_support_criteria_if_them_do_not_satisifies_speciciation(SpecificationInterface $specification)
+    function it_does_not_support_criteria_if_they_do_not_satisifies_speciciation(SpecificationInterface $specification)
     {
         $criteria = Criteria::fromQueryParameters('product', ['code' => 'banana']);
         $specification->satisfies($criteria)->willReturn(false);

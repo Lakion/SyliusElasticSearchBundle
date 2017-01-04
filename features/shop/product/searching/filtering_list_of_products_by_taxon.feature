@@ -11,17 +11,17 @@ Feature: Filtering list of products by taxon
     @domain
     Scenario: Filtering products by book
         When I filter them by "Books" taxon
-        Then I should see 10 products on the list
+        Then I should see 50 products on the list
 
     @domain
     Scenario: Filtering product by stickers
         When I filter them by "Stickers" taxon
-        Then I should see 30 products on the list
+        Then I should see 15 products on the list
 
     @domain
     Scenario: Filtering product by mugs
         When I filter them by "Mugs" taxon
-        Then I should see 20 products on the list
+        Then I should see 40 products on the list
 
     @domain
     Scenario: List of all products without filtering

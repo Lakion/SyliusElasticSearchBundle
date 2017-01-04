@@ -13,8 +13,8 @@ Feature: Filtering list of products by options
         Then I should see 10 products on the list
 
     @domain
-    Scenario: Filtering product by their type and size
-        When I filter them by double mug type and sticker size 7
+    Scenario: Filtering product by their type or size
+        When I filter them by double mug type or sticker size 7
         Then I should see 30 products on the list
 
     @domain

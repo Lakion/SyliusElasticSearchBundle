@@ -9,10 +9,13 @@
             <argument type="service" id="fos_elastica.manager.orm" />
             <argument type="service" id="lakion_sylius_elastic_search.factory.search" />
             <call method="addBuilder">
+                <argument type="service" id="lakion_sylius_elastic_search.search_builder.default_match_all" />
+            </call>
+            <call method="addBuilder">
                 <argument type="service" id="lakion_sylius_elastic_search.search_builder.has_product_options" />
             </call>
             <call method="addBuilder">
-                <argument type="service" id="lakion_sylius_elastic_search.search_builder.default_match_all" />
+                <argument type="service" id="lakion_sylius_elastic_search.search_builder.product_in_taxon" />
             </call>
         </service>
     </services>

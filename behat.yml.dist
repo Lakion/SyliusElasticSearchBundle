@@ -1,7 +1,5 @@
 imports:
     - vendor/sylius/sylius/behat.yml.dist
-    - src/Tests/Behat/Resources/suites.yml
-
 
 default:
     extensions:
