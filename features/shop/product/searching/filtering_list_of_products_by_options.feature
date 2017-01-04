@@ -11,7 +11,7 @@ Feature: Filtering list of products by options
     @domain
     Scenario: List of all products without filtering
         When I view the list of the products without filtering
-        Then I should see 30 products on the list
+        Then I should see 55 products on the list
 
     @domain
     Scenario: Filtering products by their type

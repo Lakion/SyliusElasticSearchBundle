@@ -56,5 +56,6 @@ final class ProductContext implements Context
     {
         $this->mugProductFixture->load(['amount' => (int) $mugsNumber]);
         $this->stickerProductFixture->load(['amount' => (int) $stickersNumber]);
+        $this->bookProductFixture->load(['amount' => (int) $booksNumber]);
     }
 }

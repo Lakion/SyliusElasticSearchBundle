@@ -7,4 +7,11 @@
     <imports>
         <import resource="services/searching_products.xml" />
     </imports>
+
+    <services>
+        <service id="lakion_sylius_elastic_search.context.hook.elastic_search" class="Lakion\SyliusElasticSearchBundle\Tests\Behat\Context\Hook\ElasticSearchContext">
+            <argument type="service" id="__symfony__.fos_elastica.resetter" />
+            <tag name="fob.context_service" />
+        </service>
+    </services>
 </container>

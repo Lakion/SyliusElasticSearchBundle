@@ -2,6 +2,7 @@ default:
     suites:
         domain_shop_searching_product:
             contexts_services:
+                - lakion_sylius_elastic_search.context.hook.elastic_search
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.transform.product
