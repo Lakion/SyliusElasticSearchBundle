@@ -6,5 +6,6 @@
 
     <services>
         <service id="lakion_sylius_elastic_search.search_specification.product_has_option_value" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Specification\ProductHasOptionValue" />
+        <service id="lakion_sylius_elastic_search.search_specification.empty_criteria" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Specification\EmptyCriteria" />
     </services>
 </container>

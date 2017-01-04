@@ -37,6 +37,6 @@ final class ElasticSearchContext implements Context
      */
     public function resetElasticSearch()
     {
-        $this->resetter->resetAllIndexes();
+//        $this->resetter->resetAllIndexes();
     }
 }

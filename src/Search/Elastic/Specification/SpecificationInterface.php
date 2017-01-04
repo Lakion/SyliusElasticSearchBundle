@@ -20,18 +20,18 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 interface SpecificationInterface
 {
     /**
-     * @param Criteria $parameters
+     * @param Criteria $criteria
      *
      * @return BuilderInterface
      */
-    public function getQueryFor(Criteria $parameters);
+    public function getQueryFor(Criteria $criteria);
 
     /**
-     * @param Criteria $parameters
+     * @param Criteria $criteria
      *
      * @return bool
      */
-    public function satisfies(Criteria $parameters);
+    public function satisfies(Criteria $criteria);
 
     /**
      * @return string
