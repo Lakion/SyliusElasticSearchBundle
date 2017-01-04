@@ -12,6 +12,7 @@
 namespace Lakion\SyliusElasticSearchBundle\Tests\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use Lakion\SyliusElasticSearchBundle\Tests\Behat\Services\SuspenderInterface;
 use Sylius\Bundle\FixturesBundle\Fixture\FixtureInterface;
 
 /**
@@ -35,18 +36,26 @@ final class ProductContext implements Context
     private $stickerProductFixture;
 
     /**
+     * @var SuspenderInterface
+     */
+    private $elasticSearchSuspender;
+
+    /**
      * @param FixtureInterface $bookProductFixture
      * @param FixtureInterface $mugProductFixture
      * @param FixtureInterface $stickerProductFixture
+     * @param SuspenderInterface $elasticSearchSuspender
      */
     public function __construct(
         FixtureInterface $bookProductFixture,
         FixtureInterface $mugProductFixture,
-        FixtureInterface $stickerProductFixture
+        FixtureInterface $stickerProductFixture,
+        SuspenderInterface $elasticSearchSuspender
     ) {
         $this->bookProductFixture = $bookProductFixture;
         $this->mugProductFixture = $mugProductFixture;
         $this->stickerProductFixture = $stickerProductFixture;
+        $this->elasticSearchSuspender = $elasticSearchSuspender;
     }
 
     /**
@@ -57,5 +66,7 @@ final class ProductContext implements Context
         $this->mugProductFixture->load(['amount' => (int) $mugsNumber]);
         $this->stickerProductFixture->load(['amount' => (int) $stickersNumber]);
         $this->bookProductFixture->load(['amount' => (int) $booksNumber]);
+
+        $this->elasticSearchSuspender->waitForLoadingNumberOfData((int) $mugsNumber + (int) $stickersNumber + (int) $booksNumber, 5);
     }
 }

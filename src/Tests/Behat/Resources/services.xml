@@ -13,5 +13,8 @@
             <argument type="service" id="__symfony__.fos_elastica.resetter" />
             <tag name="fob.context_service" />
         </service>
+        <service id="lakion_sylius_elastic_search.suspender.elastic_search" class="Lakion\SyliusElasticSearchBundle\Tests\Behat\Services\ElasticSearchSuspender">
+            <argument type="service" id="__symfony__.fos_elastica.client" />
+        </service>
     </services>
 </container>

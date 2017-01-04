@@ -7,7 +7,6 @@ Feature: Filtering list of products by options
     Background:
         Given the store has about 10 Mugs, 20 Stickers and 25 Books
 
-
     @domain
     Scenario: Filtering products by their type
         When I filter them by double mug type

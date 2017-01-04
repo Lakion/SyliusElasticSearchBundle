@@ -9,6 +9,7 @@
             <argument type="service" id="__symfony__.sylius.fixture.book_product" />
             <argument type="service" id="__symfony__.sylius.fixture.mug_product" />
             <argument type="service" id="__symfony__.sylius.fixture.sticker_product" />
+            <argument type="service" id="lakion_sylius_elastic_search.suspender.elastic_search" />
             <tag name="fob.context_service" />
         </service>
 

@@ -14,14 +14,14 @@ final class DefaultMatchAll implements BuilderInterface
     /**
      * @var SpecificationInterface
      */
-    private $defaultMatchAll;
+    private $emptyCriteria;
 
     /**
-     * @param SpecificationInterface $defaultMatchAll
+     * @param SpecificationInterface $emptyCriteria
      */
-    public function __construct(SpecificationInterface $defaultMatchAll)
+    public function __construct(SpecificationInterface $emptyCriteria)
     {
-        $this->defaultMatchAll = $defaultMatchAll;
+        $this->emptyCriteria = $emptyCriteria;
     }
 
     /**
@@ -29,7 +29,7 @@ final class DefaultMatchAll implements BuilderInterface
      */
     public function supports(Criteria $criteria)
     {
-        return $this->defaultMatchAll->satisfies($criteria);
+        return $this->emptyCriteria->satisfies($criteria);
     }
 
     /**
@@ -37,6 +37,6 @@ final class DefaultMatchAll implements BuilderInterface
      */
     public function build(Criteria $criteria, Search $search)
     {
-        $search->addQuery($this->defaultMatchAll->getQueryFor($criteria));
+        $search->addQuery($this->emptyCriteria->getQueryFor($criteria));
     }
 }
