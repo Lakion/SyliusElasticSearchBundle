@@ -5,7 +5,10 @@ default:
                 - lakion_sylius_elastic_search.context.hook.elastic_search
                 - sylius.behat.context.hook.doctrine_orm
 
+                - sylius.behat.context.transform.taxon
+
                 - lakion_sylius_elastic_search.context.setup.product
+                - sylius.behat.context.setup.taxonomy
 
                 - lakion_sylius_elastic_search.context.domain.shop.product
             filters:

@@ -17,6 +17,7 @@ use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\Product;
+use Sylius\Component\Core\Model\TaxonInterface;
 use Webmozart\Assert\Assert;
 
 /**
@@ -50,9 +51,7 @@ final class ProductContext implements Context
     public function iFilterThemByDoubleMugType($mugTypeValue)
     {
         $criteria = Criteria::fromQueryParameters(Product::class, ['product_option_code' => sprintf('mug_type_%s', $mugTypeValue)]);
-        $result = $this->searchEngine->match($criteria);
-
-        $this->sharedStorage->set('search_result', $result);
+        $this->match($criteria);
     }
 
     /**
@@ -61,9 +60,7 @@ final class ProductContext implements Context
     public function iFilterThemByDoubleMugTypeAndStickerSize($mugTypeValue, $stickerSizeValue)
     {
         $criteria = Criteria::fromQueryParameters(Product::class, ['product_option_code' => sprintf('mug_type_%s+sticker_size_%s', $mugTypeValue, $stickerSizeValue)]);
-        $result = $this->searchEngine->match($criteria);
-
-        $this->sharedStorage->set('search_result', $result);
+        $this->match($criteria);
     }
 
     /**
@@ -72,9 +69,7 @@ final class ProductContext implements Context
     public function iFilterThemByStickierSize($stickerSizeValue)
     {
         $criteria = Criteria::fromQueryParameters(Product::class, ['product_option_code' => sprintf('sticker_size_%s', $stickerSizeValue)]);
-        $result = $this->searchEngine->match($criteria);
-
-        $this->sharedStorage->set('search_result', $result);
+        $this->match($criteria);
     }
 
     /**
@@ -83,9 +78,16 @@ final class ProductContext implements Context
     public function iViewTheListOfTheProductsWithoutFiltering()
     {
         $criteria = Criteria::fromQueryParameters(Product::class, []);
-        $result = $this->searchEngine->match($criteria);
+        $this->match($criteria);
+    }
 
-        $this->sharedStorage->set('search_result', $result);
+    /**
+     * @When I filter them by :taxon taxon
+     */
+    public function iFilterThemByTaxon(TaxonInterface $taxon)
+    {
+        $criteria = Criteria::fromQueryParameters(Product::class, ['taxon_code' => $taxon->getCode()]);
+        $this->match($criteria);
     }
 
     /**
@@ -97,5 +99,15 @@ final class ProductContext implements Context
         $result = $this->sharedStorage->get('search_result');
 
         Assert::eq($result->getTotalHits(), $numberOfProducts);
+    }
+
+    /**
+     * @param Criteria $criteria
+     */
+    private function match(Criteria $criteria)
+    {
+        $result = $this->searchEngine->match($criteria);
+
+        $this->sharedStorage->set('search_result', $result);
     }
 }
