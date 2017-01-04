@@ -18,9 +18,9 @@ interface SuspenderInterface
 {
     /**
      * @param int $number
-     * @param int $timeout
+     * @param int $timeoutSeconds
      *
      * @return bool
      */
-    public function waitForLoadingNumberOfData($number, $timeout);
+    public function waitForLoadingNumberOfData($number, $timeoutSeconds);
 }

@@ -59,7 +59,7 @@ final class ProductContext implements Context
     }
 
     /**
-     * @Given the store has about :mugsNumber Mugs, :stickersNumber Stickers and :booksNumber Books
+     * @Given the store has :mugsNumber Mugs, :stickersNumber Stickers and :booksNumber Books
      */
     public function theStoreHasAboutMugsAndStickers($mugsNumber, $stickersNumber, $booksNumber)
     {

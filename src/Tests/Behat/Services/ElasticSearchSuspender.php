@@ -35,10 +35,10 @@ final class ElasticSearchSuspender implements SuspenderInterface
     /**
      * {@inheritdoc}
      */
-    public function waitForLoadingNumberOfData($number, $timeout)
+    public function waitForLoadingNumberOfData($number, $timeoutSeconds)
     {
         $start = microtime(true);
-        $end = $start + $timeout;
+        $end = $start + $timeoutSeconds;
 
         do {
             $response = $this->refreshResponse();

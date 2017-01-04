@@ -6,7 +6,7 @@ Feature: Filtering list of products by taxon
 
     Background:
         Given the store classifies its products as Mugs, Stickers and Books
-        And the store has about 40 Mugs, 15 Stickers and 50 Books
+        And the store has 40 Mugs, 15 Stickers and 50 Books
 
     @domain
     Scenario: Filtering products by book

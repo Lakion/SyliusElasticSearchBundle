@@ -32,5 +32,5 @@ install:
     - src/Tests/Application/bin/console fos:elastica:reset --env=test -vvv --no-interaction
 
 script:
-    - bin/behat
-    - bin/phpspec run
+    - bin/behat --strict -vvv --no-interaction
+    - bin/phpspec run --no-interaction

@@ -5,7 +5,7 @@ Feature: Filtering list of products by options
     I want to be able to filter the products
 
     Background:
-        Given the store has about 10 Mugs, 20 Stickers and 25 Books
+        Given the store has 10 Mugs, 20 Stickers and 25 Books
 
     @domain
     Scenario: Filtering products by their type
