@@ -13,12 +13,9 @@ namespace Lakion\SyliusElasticSearchBundle\Controller;
 
 use FOS\RestBundle\View\ConfigurableViewHandlerInterface;
 use FOS\RestBundle\View\View;
-use Lakion\SyliusElasticSearchBundle\Form\Type\FilterScopeType;
-use Lakion\SyliusElasticSearchBundle\Form\Type\ProductOptionValueFilter;
-use Lakion\SyliusElasticSearchBundle\Form\Type\ProductPriceRangeFilter;
+use Lakion\SyliusElasticSearchBundle\Form\Type\FilterSetType;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,11 +72,12 @@ final class SearchController
 
         $result = $this->searchEngine->match($criteria);
         $partialResult = $result->getResults($criteria->getPaginating()->getOffset(), $criteria->getPaginating()->getItemsPerPage());
-        $form = $this->formFactory->create(FilterScopeType::class, null, ['filter_scope' => $this->getFilterScope($request)]);
+        $form = $this->formFactory->create(FilterSetType::class, null, ['filter_set' => $this->getFilterScope($request)]);
 
         $view->setData([
             'resources' => $partialResult->toArray(),
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'criteria' => $criteria,
         ]);
 
         return $this->restViewHandler->handle($view);
@@ -136,10 +134,10 @@ final class SearchController
     {
         $syliusAttributes = $request->attributes->get('_sylius');
 
-        if (!isset($syliusAttributes['filter_scope'])) {
-            throw new HttpException(Response::HTTP_BAD_REQUEST, 'You need to configure filter scope in routing!');
+        if (!isset($syliusAttributes['filter_set'])) {
+            throw new HttpException(Response::HTTP_BAD_REQUEST, 'You need to configure filter set in routing!');
         }
 
-        return $syliusAttributes['filter_scope'];
+        return $syliusAttributes['filter_set'];
     }
 }

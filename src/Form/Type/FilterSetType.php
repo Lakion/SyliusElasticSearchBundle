@@ -11,7 +11,7 @@
 
 namespace Lakion\SyliusElasticSearchBundle\Form\Type;
 
-use Lakion\SyliusElasticSearchBundle\Form\Configuration\FilterScope;
+use Lakion\SyliusElasticSearchBundle\Form\Configuration\FilterSet;
 use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class FilterScopeType extends AbstractType
+final class FilterSetType extends AbstractType
 {
     /**
      * @var FormTypeRegistryInterface
@@ -28,18 +28,21 @@ final class FilterScopeType extends AbstractType
     private $filterTypeRegistry;
 
     /**
-     * @var FilterScope[]
+     * @var FilterSet[]
      */
-    private $filterScopes;
+    private $filterSets;
 
     /**
      * @param FormTypeRegistryInterface $filterTypeRegistry
-     * @param FilterScope[] $filterScopes
+     * @param FilterSet[] $filterSets
      */
-    public function __construct(FormTypeRegistryInterface $filterTypeRegistry, array $filterScopes)
+    public function __construct(FormTypeRegistryInterface $filterTypeRegistry, array $filterSets)
     {
         $this->filterTypeRegistry = $filterTypeRegistry;
-        $this->filterScopes = $filterScopes;
+
+        foreach ($filterSets as $filterSetName => $filterSetConfiguration) {
+            $this->filterSets[$filterSetName] = FilterSet::createFromConfiguration($filterSetName, $filterSetConfiguration);
+        }
     }
 
     /**
@@ -47,11 +50,11 @@ final class FilterScopeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->filterScopes[$options['filter_scope']]['filters'] as $name => $filter) {
+        foreach ($this->filterSets[$options['filter_set']]->getFilters() as $name => $filter) {
             $builder->add(
-                $name,
-                get_class($this->filterTypeRegistry->get('default', $filter['type'])),
-                $filter['options']
+                $filter->getName(),
+                $this->filterTypeRegistry->get('default', $filter->getType()),
+                $filter->getOptions()
             );
         }
     }
@@ -62,8 +65,9 @@ final class FilterScopeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired('filter_scope')
-            ->setAllowedTypes('filter_scope', 'string')
+            ->setDefault('csrf_protection', false)
+            ->setRequired('filter_set')
+            ->setAllowedTypes('filter_set', 'string')
         ;
     }
 }

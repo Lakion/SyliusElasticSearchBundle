@@ -14,6 +14,7 @@ namespace Lakion\SyliusElasticSearchBundle\Form\Type;
 use Doctrine\ORM\EntityRepository;
 use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
 use FOS\ElasticaBundle\Repository;
+use Lakion\SyliusElasticSearchBundle\Form\DataTransformer\FilterSetTransformer;
 use ONGR\ElasticsearchDSL\Aggregation\FiltersAggregation;
 use ONGR\ElasticsearchDSL\Query\NestedQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;

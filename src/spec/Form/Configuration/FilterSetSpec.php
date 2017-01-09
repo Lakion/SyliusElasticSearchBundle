@@ -3,13 +3,13 @@
 namespace spec\Lakion\SyliusElasticSearchBundle\Form\Configuration;
 
 use Lakion\SyliusElasticSearchBundle\Form\Configuration\Filter;
-use Lakion\SyliusElasticSearchBundle\Form\Configuration\FilterScope;
+use Lakion\SyliusElasticSearchBundle\Form\Configuration\FilterSet;
 use PhpSpec\ObjectBehavior;
 
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class FilterScopeSpec extends ObjectBehavior
+final class FilterSetSpec extends ObjectBehavior
 {
     function let()
     {
@@ -35,7 +35,7 @@ final class FilterScopeSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(FilterScope::class);
+        $this->shouldHaveType(FilterSet::class);
     }
 
     function it_has_name()

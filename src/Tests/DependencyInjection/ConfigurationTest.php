@@ -59,7 +59,7 @@ final class ConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertProcessedConfigurationEquals(
             [[
-                'filter_scope' => [
+                'filter_sets' => [
                     't_shirts' => [
                         'filters' => [
                             'color' => [
@@ -89,7 +89,7 @@ final class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 ]
             ]],
             [
-                'filter_scope' => [
+                'filter_sets' => [
                     't_shirts' => [
                         'filters' => [
                             'color' => [

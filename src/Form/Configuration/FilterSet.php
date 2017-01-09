@@ -14,7 +14,7 @@ namespace Lakion\SyliusElasticSearchBundle\Form\Configuration;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class FilterScope
+final class FilterSet
 {
     /**
      * @var string
@@ -40,7 +40,7 @@ final class FilterScope
      * @param string $name
      * @param array $configuration
      *
-     * @return FilterScope
+     * @return FilterSet
      */
     public static function createFromConfiguration($name, array $configuration)
     {

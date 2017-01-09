@@ -42,7 +42,7 @@ sylius_grid:
         - doctrine/orm
 
 lakion_sylius_elastic_search:
-    filter_scopes:
+    filter_sets:
         products_option:
             filters:
                 mug_type:

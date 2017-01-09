@@ -40,7 +40,7 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
      */
     public function getRouteName()
     {
-        return 'sylius_shop_product_index';
+        return 'lakion_elastic_search_shop_product_index';
     }
 
     /**

@@ -42,7 +42,7 @@ final class RegisterFilterTypePass implements CompilerPassInterface
             $registry->addMethodCall('add', [
                 'default',
                 $filterTypeTag[0]['type'],
-                new Reference($filterTypeServiceId)
+                $container->getDefinition($filterTypeServiceId)->getClass()
             ]);
         }
     }
