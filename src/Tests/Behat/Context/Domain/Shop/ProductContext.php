@@ -73,6 +73,15 @@ final class ProductContext implements Context
     }
 
     /**
+     * @When I filter them by price between :graterThan and :lessThan
+     */
+    public function iFilterThemByPriceBetweenAnd($graterThan, $lessThan)
+    {
+        $criteria = Criteria::fromQueryParameters(Product::class, ['product_price_range' => ['grater_than'=> $graterThan, 'less_than' => $lessThan]]);
+        $this->match($criteria);
+    }
+
+    /**
      * @When I view the list of the products without filtering
      */
     public function iViewTheListOfTheProductsWithoutFiltering()

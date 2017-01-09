@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="lakion_sylius_elastic_search.form_type.product_option_value_filter" class="Lakion\SyliusElasticSearchBundle\Form\Type\ProductOptionValueFilter">
+            <argument type="service" id="fos_elastica.manager.orm" />
+            <tag name="form.type" />
+            <tag name="filter.type" type="option" />
+        </service>
+        <service id="lakion_sylius_elastic_search.form_type.filter_scope_type" class="Lakion\SyliusElasticSearchBundle\Form\Type\FilterScopeType">
+            <argument type="service" id="lakion_sylius_elastic_search.form_registry.filters"/>
+            <argument>%lakion_sylius_elastic_search.filter_scopes%</argument>
+            <tag name="form.type" />
+        </service>
+    </services>
+</container>

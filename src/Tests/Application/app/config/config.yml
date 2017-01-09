@@ -40,3 +40,16 @@ sylius_resource:
 sylius_grid:
     drivers:
         - doctrine/orm
+
+lakion_sylius_elastic_search:
+    filter_scopes:
+        products_option:
+            filters:
+                mug_type:
+                    type: option
+                    options:
+                        code: mug_type
+                sticker_size:
+                    type: option
+                    options:
+                        code: sticker_size

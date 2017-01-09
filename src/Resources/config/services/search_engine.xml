@@ -17,6 +17,9 @@
             <call method="addBuilder">
                 <argument type="service" id="lakion_sylius_elastic_search.search_builder.product_in_taxon" />
             </call>
+            <call method="addBuilder">
+                <argument type="service" id="lakion_sylius_elastic_search.search_builder.product_in_price_range" />
+            </call>
         </service>
     </services>
 </container>

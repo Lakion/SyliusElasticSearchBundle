@@ -9,5 +9,6 @@
         <service id="lakion_sylius_elastic_search.search_specification.product_has_option_value" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Specification\ProductHasOptionValue" />
         <service id="lakion_sylius_elastic_search.search_specification.product_in_main_taxon" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Specification\ProductInMainTaxon" />
         <service id="lakion_sylius_elastic_search.search_specification.product_in_product_taxons" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Specification\ProductInProductTaxons" />
+        <service id="lakion_sylius_elastic_search.search_specification.product_in_price_range" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Specification\InPriceRange" />
     </services>
 </container>

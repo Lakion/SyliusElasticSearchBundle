@@ -9,11 +9,11 @@
     </imports>
 
     <services>
-        <service id="lakion_sylius_elastic_search.context.hook.elastic_search" class="Lakion\SyliusElasticSearchBundle\Tests\Behat\Context\Hook\ElasticSearchContext">
+        <service id="lakion_sylius_elastic_search.behat.context.hook.elastic_search" class="Lakion\SyliusElasticSearchBundle\Tests\Behat\Context\Hook\ElasticSearchContext">
             <argument type="service" id="__symfony__.fos_elastica.resetter" />
             <tag name="fob.context_service" />
         </service>
-        <service id="lakion_sylius_elastic_search.suspender.elastic_search" class="Lakion\SyliusElasticSearchBundle\Tests\Behat\Services\ElasticSearchSuspender">
+        <service id="lakion_sylius_elastic_search.behat.suspender.elastic_search" class="Lakion\SyliusElasticSearchBundle\Tests\Behat\Services\ElasticSearchSuspender">
             <argument type="service" id="__symfony__.fos_elastica.client" />
         </service>
     </services>
