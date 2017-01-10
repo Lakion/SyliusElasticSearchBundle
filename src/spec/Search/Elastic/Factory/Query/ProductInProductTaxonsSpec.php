@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\Lakion\SyliusElasticSearchBundle\Search\Elastic\Query;
+namespace spec\Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query;
 
 use Lakion\SyliusElasticSearchBundle\Exception\MissingQueryParameterException;
-use Lakion\SyliusElasticSearchBundle\Search\Elastic\Query\ProductInProductTaxons;
-use Lakion\SyliusElasticSearchBundle\Search\Elastic\Query\QueryInterface;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInProductTaxons;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\QueryFactoryInterface;
 use ONGR\ElasticsearchDSL\Query\NestedQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
 use PhpSpec\ObjectBehavior;
@@ -19,23 +19,19 @@ final class ProductInProductTaxonsSpec extends ObjectBehavior
         $this->shouldHaveType(ProductInProductTaxons::class);
     }
 
-    function it_is_query()
+    function it_is_query_factory()
     {
-        $this->shouldImplement(QueryInterface::class);
+        $this->shouldImplement(QueryFactoryInterface::class);
     }
 
     function it_returns_query_for_given_criteria()
     {
-        $this->setParameters(['taxon_code' => 'mugs']);
-
-        $this->create()->shouldBeLike(new NestedQuery('productTaxons', new TermQuery('productTaxons.taxon.code', 'mugs')));
+        $this->create(['taxon_code' => 'mugs'])->shouldBeLike(new NestedQuery('productTaxons', new TermQuery('productTaxons.taxon.code', 'mugs')));
     }
 
     function it_cannot_create_query_if_there_is_no_required_parameters()
     {
-        $this->setParameters(['product_option_value' => 't-shirt-color']);
-
-        $this->shouldThrow(MissingQueryParameterException::class)->during('create', []);
+        $this->shouldThrow(MissingQueryParameterException::class)->during('create', [['product_option_value' => 't-shirt-color']]);
     }
 
     function it_cannot_create_query_if_parameters_are_empty()

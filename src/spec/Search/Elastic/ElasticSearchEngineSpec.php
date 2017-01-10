@@ -8,7 +8,7 @@ use FOS\ElasticaBundle\Repository;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Builder\BuilderInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\ElasticSearchEngine;
-use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\SearchFactoryInterface;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search\SearchFactoryInterface;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
 use ONGR\ElasticsearchDSL\Search;
 use PhpSpec\ObjectBehavior;

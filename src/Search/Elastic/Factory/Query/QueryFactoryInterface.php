@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Lakion\SyliusElasticSearchBundle\Search\Elastic\Query;
+namespace Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query;
 
 use Elastica\QueryBuilder\DSL;
 use Lakion\SyliusElasticSearchBundle\Exception\MissingQueryParameterException;
@@ -17,17 +17,14 @@ use Lakion\SyliusElasticSearchBundle\Exception\MissingQueryParameterException;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-interface QueryInterface
+interface QueryFactoryInterface
 {
     /**
      * @param array $parameters
-     */
-    public function setParameters(array $parameters);
-
-    /**
+     *
      * @return DSL
      *
      * @throws MissingQueryParameterException
      */
-    public function create();
+    public function create($parameters = []);
 }

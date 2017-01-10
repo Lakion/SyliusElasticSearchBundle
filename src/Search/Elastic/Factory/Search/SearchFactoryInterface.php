@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory;
+namespace Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search;
 
 use ONGR\ElasticsearchDSL\Search;
 

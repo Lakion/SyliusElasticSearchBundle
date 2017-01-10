@@ -1,6 +1,6 @@
 <?php
 
-namespace Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory;
+namespace Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search;
 
 use ONGR\ElasticsearchDSL\Search;
 

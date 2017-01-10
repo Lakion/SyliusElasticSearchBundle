@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory;
+namespace spec\Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search;
 
-use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\SearchFactory;
-use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\SearchFactoryInterface;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search\SearchFactory;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search\SearchFactoryInterface;
 use ONGR\ElasticsearchDSL\Search;
 use PhpSpec\ObjectBehavior;
 

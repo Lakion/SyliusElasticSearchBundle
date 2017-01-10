@@ -12,7 +12,7 @@
         <import resource="services/search_specification.xml"/>
     </imports>
     <services>
-        <service id="lakion_sylius_elastic_search.factory.search" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\SearchFactory" />
+        <service id="lakion_sylius_elastic_search.factory.search" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search\SearchFactory" />
         <service id="lakion_sylius_elastic_search.form_registry.filters" class="Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry" />
     </services>
 </container>
