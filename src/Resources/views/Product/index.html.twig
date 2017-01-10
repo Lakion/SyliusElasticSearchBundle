@@ -5,7 +5,8 @@
 <button type="submit">{{ 'sylius.ui.filter'|trans }}</button>
 {{ form_end(form) }}
 
+<ul id="products">
 {% for product in resources %}
-    {{ product.name }}
-    <br>
+    <li>{{ product.name }}</li>
 {% endfor %}
+</ul>

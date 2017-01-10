@@ -51,9 +51,8 @@ final class ProductOptionValueFilter extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            'product_option_values',
-            EntityType::class,
-            [
+            'product_option_code',
+            EntityType::class, [
                 'class' => ProductOptionValue::class,
                 'choice_value' => function (ProductOptionValue $productOptionValue) {
                     return $productOptionValue->getCode();

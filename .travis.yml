@@ -34,3 +34,4 @@ install:
 script:
     - bin/behat --strict -vvv --no-interaction
     - bin/phpspec run --no-interaction
+    - bin/phpunit

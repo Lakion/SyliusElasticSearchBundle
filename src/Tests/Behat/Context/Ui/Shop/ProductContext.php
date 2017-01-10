@@ -28,12 +28,20 @@ final class ProductContext implements Context
     private $indexPage;
 
     /**
+     * @param IndexPageInterface $indexPage
+     */
+    public function __construct(IndexPageInterface $indexPage)
+    {
+        $this->indexPage = $indexPage;
+    }
+
+    /**
      * @When I filter them by :mugTypeValue mug type
      */
     public function iFilterThemByDoubleMugType($mugTypeValue)
     {
-        $this->indexPage->open();
-        $this->indexPage->filter(Criteria::fromQueryParameters(Product::class, ['mug_type' => $mugTypeValue]));
+        $this->indexPage->open(['per_page' => 100]);
+        $this->indexPage->filter(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['mug_type' => $mugTypeValue]]));
     }
 
     /**
@@ -41,8 +49,8 @@ final class ProductContext implements Context
      */
     public function iFilterThemByDoubleMugTypeAndStickerSize($mugTypeValue, $stickerSizeValue)
     {
-        $this->indexPage->open();
-        $this->indexPage->filter(Criteria::fromQueryParameters(Product::class, ['mug_type' => $mugTypeValue, 'sticker_size' => $stickerSizeValue]));
+        $this->indexPage->open(['per_page' => 100]);
+        $this->indexPage->filter(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['mug_type' => $mugTypeValue, 'sticker_size' => $stickerSizeValue]]));
     }
 
     /**
@@ -50,8 +58,8 @@ final class ProductContext implements Context
      */
     public function iFilterThemByStickierSize($stickerSizeValue)
     {
-        $this->indexPage->open();
-        $this->indexPage->filter(Criteria::fromQueryParameters(Product::class, ['sticker_size' => $stickerSizeValue]));
+        $this->indexPage->open(['per_page' => 100]);
+        $this->indexPage->filter(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['sticker_size' => $stickerSizeValue]]));
     }
 
     /**
@@ -59,7 +67,7 @@ final class ProductContext implements Context
      */
     public function iViewTheListOfTheProductsWithoutFiltering()
     {
-        $this->indexPage->open();
+        $this->indexPage->open(['per_page' => 100]);
     }
 
     /**
@@ -67,7 +75,6 @@ final class ProductContext implements Context
      */
     public function iShouldSeeProductsOnTheList($numberOfProducts)
     {
-        $this->indexPage->open();
-        Assert::eq($numberOfProducts, count($this->indexPage->getAllProducts()));
+        Assert::eq(count($this->indexPage->getAllProducts()), $numberOfProducts);
     }
 }

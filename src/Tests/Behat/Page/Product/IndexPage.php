@@ -24,7 +24,19 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
      */
     public function filter(Criteria $criteria)
     {
+        $filterFiledName = key($criteria->getFiltering()->getFields());
 
+        foreach ($criteria->getFiltering()->getFields()[$filterFiledName] as $type => $value) {
+            $filterType = $this->getElement('filter_option', [
+                '%filter_type%' => $type,
+                '%filter_field_name%' => $filterFiledName,
+                '%filter_value%' => sprintf('%s_%s', $type, $value)
+            ]);
+
+            $filterType->check();
+        }
+
+        $this->getDocument()->pressButton('Filter');
     }
 
     /**
@@ -32,7 +44,9 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
      */
     public function getAllProducts()
     {
+        $productElements = $this->getElement('products')->findAll('css', 'li');
 
+        return $productElements;
     }
 
     /**
@@ -49,7 +63,8 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
     protected function getDefinedElements()
     {
         return array_merge(parent::getDefinedElements(), [
-            ''
+            'filter_option' => '#filter_set_%filter_type%_%filter_field_name%_%filter_value%',
+            'products' => '#products',
         ]);
     }
 }

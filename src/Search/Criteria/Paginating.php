@@ -31,12 +31,12 @@ final class Paginating
      */
     private function __construct($currentPage, $itemsPerPage)
     {
-        $this->currentPage = $currentPage;
+        $this->currentPage = (int) $currentPage;
         if (0 >= $currentPage) {
             $this->currentPage = self::DEFAULT_CURRENT_PAGE;
         }
 
-        $this->itemsPerPage = $itemsPerPage;
+        $this->itemsPerPage = (int) $itemsPerPage;
         if (0 >= $itemsPerPage) {
             $this->itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE;
         }

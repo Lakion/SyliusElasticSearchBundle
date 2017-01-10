@@ -8,7 +8,7 @@ Feature: Filtering list of products by price range
         Given the store operates on a single channel in "United States"
         And the store has 10 Mugs, 20 Stickers and 25 Books
 
-    @domain
+    @todo
     Scenario: Filtering products by price range
         When I filter them by price between 100 and 200
         Then I should see 5 products on the list

@@ -40,7 +40,7 @@ final class Configuration implements ConfigurationInterface
     {
         $filterSetNode = $rootNode
             ->children()
-                ->arrayNode('filter_scopes')
+                ->arrayNode('filter_sets')
                     ->useAttributeAsKey('name')
                     ->prototype('array')
             ->validate()

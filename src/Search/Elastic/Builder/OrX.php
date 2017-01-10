@@ -21,8 +21,6 @@ use ONGR\ElasticsearchDSL\Search;
  */
 final class OrX implements BuilderInterface
 {
-    const DELIMITER = '+';
-
     /**
      * @var SpecificationInterface
      */
@@ -41,7 +39,7 @@ final class OrX implements BuilderInterface
      */
     public function supports(Criteria $criteria)
     {
-        return $this->specification->satisfies($criteria);
+        return true;
     }
 
     /**
@@ -49,13 +47,22 @@ final class OrX implements BuilderInterface
      */
     public function build(Criteria $criteria, Search $search)
     {
-        $filteringValues = explode(self::DELIMITER, $criteria->getFiltering()->getFields()[$this->specification->getParameterKey()]);
+        if (!isset($criteria->getFiltering()->getFields()['filter_set'])) {
+            return;
+        }
 
-        foreach ($filteringValues as $value) {
-            $search->addFilter(
-                $this->specification->getQueryFor(Criteria::fromQueryParameters($criteria->getResourceAlias(), [$this->specification->getParameterKey() => $value])),
-                BoolQuery::SHOULD
-            );
+        $filterSet = $criteria->getFiltering()->getFields()['filter_set'];
+        foreach ($filterSet as $filterSetName => $filterSetValue) {
+            foreach ($filterSetValue as $filterName => $filterValue) {
+                if ($this->specification->getParameterKey() === $filterName) {
+                    foreach ($filterValue as $value) {
+                        $search->addFilter(
+                            $this->specification->getQueryFor(Criteria::fromQueryParameters($criteria->getResourceAlias(), [$this->specification->getParameterKey() => $value])),
+                            BoolQuery::SHOULD
+                        );
+                    }
+                }
+            }
         }
     }
 }
