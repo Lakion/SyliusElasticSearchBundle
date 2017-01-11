@@ -11,14 +11,15 @@
 
 namespace Lakion\SyliusElasticSearchBundle\Form\Type;
 
+use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class ProductPriceRangeFilter extends AbstractType
+final class ProductPriceRangeFilterType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -26,8 +27,19 @@ final class ProductPriceRangeFilter extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('product_price_grater_than', NumberType::class)
-            ->add('product_price_less_than', NumberType::class)
+            ->add('grater_than', MoneyType::class)
+            ->add('less_than', MoneyType::class)
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setRequired('filtering_key')
+            ->setAllowedTypes('filtering_key', 'string')
         ;
     }
 }

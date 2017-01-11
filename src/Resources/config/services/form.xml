@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="lakion_sylius_elastic_search.form_type.product_option_value_filter" class="Lakion\SyliusElasticSearchBundle\Form\Type\ProductOptionValueFilter">
+        <service id="lakion_sylius_elastic_search.form_type.product_option_value_filter" class="Lakion\SyliusElasticSearchBundle\Form\Type\ProductOptionValueFilterType">
             <argument type="service" id="fos_elastica.manager.orm" />
             <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_has_option_code" />
             <argument type="service" id="sylius.repository.product_option_value" />
@@ -17,6 +17,11 @@
             <argument type="service" id="lakion_sylius_elastic_search.form_registry.filters" />
             <tag name="form.type" />
             <tag name="filter.type" type="options" />
+        </service>
+
+        <service id="lakion_sylius_elastic_search.form_type.product_price_range_filter" class="Lakion\SyliusElasticSearchBundle\Form\Type\ProductPriceRangeFilterType">
+            <tag name="form.type" />
+            <tag name="filter.type" type="price" />
         </service>
 
         <service id="lakion_sylius_elastic_search.form_type.filter_scope_type" class="Lakion\SyliusElasticSearchBundle\Form\Type\FilterSetType">

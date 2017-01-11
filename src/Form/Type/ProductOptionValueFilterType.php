@@ -29,7 +29,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class ProductOptionValueFilter extends AbstractType
+final class ProductOptionValueFilterType extends AbstractType
 {
     /**
      * @var RepositoryManagerInterface

@@ -63,6 +63,16 @@ final class ProductContext implements Context
     }
 
     /**
+     * @When /^I filter them by price between ("[^"]+") and ("[^"]+")$/
+     */
+    public function iFilterThemByPriceBetweenAnd($graterThan, $lessThan)
+    {
+        sleep(5);
+        $this->indexPage->open(['per_page' => 100]);
+        $this->indexPage->filterByPriceRange($graterThan, $lessThan);
+    }
+
+    /**
      * @When I view the list of the products without filtering
      */
     public function iViewTheListOfTheProductsWithoutFiltering()

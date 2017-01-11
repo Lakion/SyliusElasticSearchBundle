@@ -11,7 +11,7 @@ Feature: Filtering list of products by price range
         And the store also has a product "LOTR t-shirt" priced at "$300"
         And the store also has a product "Breaking bad t-shirt" priced at "$50"
 
-    @domain
+    @domain @ui
     Scenario: Filtering products by price range
         When I filter them by price between "$100" and "$200"
         Then I should see 2 products on the list

@@ -22,7 +22,13 @@ interface IndexPageInterface extends SymfonyPageInterface
     /**
      * @param Criteria $criteria
      */
-    public function filter(Criteria $criteria);
+    public function filterByProductOptions(Criteria $criteria);
+
+    /**
+     * @param int $graterThan
+     * @param int $lessThan
+     */
+    public function filterByPriceRange($graterThan, $lessThan);
 
     /**
      * @return array

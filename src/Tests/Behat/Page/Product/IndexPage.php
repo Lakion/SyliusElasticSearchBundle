@@ -22,7 +22,7 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
     /**
      * {@inheritdoc}
      */
-    public function filter(Criteria $criteria)
+    public function filterByProductOptions(Criteria $criteria)
     {
         $filterFiledName = key($criteria->getFiltering()->getFields());
 
@@ -35,6 +35,17 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
 
             $filterType->check();
         }
+
+        $this->getDocument()->pressButton('Filter');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function filterByPriceRange($graterThan, $lessThan)
+    {
+        $this->getElement('filter_price_range_grater_than')->setValue($graterThan / 100);
+        $this->getElement('filter_price_range_less_than')->setValue($lessThan / 100);
 
         $this->getDocument()->pressButton('Filter');
     }
@@ -64,6 +75,8 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
     {
         return array_merge(parent::getDefinedElements(), [
             'filter_option' => '#filter_set_product_options_%filter_type%_%filter_field_name%_%filter_value%',
+            'filter_price_range_grater_than' => '#filter_set_product_price_grater_than',
+            'filter_price_range_less_than' => '#filter_set_product_price_less_than',
             'products' => '#products',
         ]);
     }

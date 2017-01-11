@@ -46,6 +46,8 @@ final class ProductHasMultipleOptionCodesApplicator implements SearchCriteriaApp
      */
     public function supports(Criteria $criteria)
     {
-        return array_key_exists('product_option_code', $criteria->getFiltering()->getFields());
+        $fields = $criteria->getFiltering()->getFields();
+
+        return array_key_exists('product_option_code', $criteria->getFiltering()->getFields()) && '' !== $fields['product_option_code'];
     }
 }
