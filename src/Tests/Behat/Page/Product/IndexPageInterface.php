@@ -30,6 +30,8 @@ interface IndexPageInterface extends SymfonyPageInterface
      */
     public function filterByPriceRange($graterThan, $lessThan);
 
+    public function filter();
+
     /**
      * @return array
      */

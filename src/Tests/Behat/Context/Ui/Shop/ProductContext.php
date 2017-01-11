@@ -43,6 +43,7 @@ final class ProductContext implements Context
     {
         $this->indexPage->open(['per_page' => 100]);
         $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['mug_type' => $mugTypeValue]]));
+        $this->indexPage->filter();
     }
 
     /**
@@ -52,6 +53,7 @@ final class ProductContext implements Context
     {
         $this->indexPage->open(['per_page' => 100]);
         $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['mug_type' => $mugTypeValue, 'sticker_size' => $stickerSizeValue]]));
+        $this->indexPage->filter();
     }
 
     /**
@@ -61,6 +63,7 @@ final class ProductContext implements Context
     {
         $this->indexPage->open(['per_page' => 100]);
         $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['sticker_size' => $stickerSizeValue]]));
+        $this->indexPage->filter();
     }
 
     /**
@@ -71,6 +74,7 @@ final class ProductContext implements Context
         sleep(5);
         $this->indexPage->open(['per_page' => 100]);
         $this->indexPage->filterByPriceRange($graterThan, $lessThan);
+        $this->indexPage->filter();
     }
 
     /**

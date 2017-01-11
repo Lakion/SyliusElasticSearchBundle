@@ -35,8 +35,6 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
 
             $filterType->check();
         }
-
-        $this->getDocument()->pressButton('Filter');
     }
 
     /**
@@ -46,7 +44,10 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
     {
         $this->getElement('filter_price_range_grater_than')->setValue($graterThan / 100);
         $this->getElement('filter_price_range_less_than')->setValue($lessThan / 100);
+    }
 
+    public function filter()
+    {
         $this->getDocument()->pressButton('Filter');
     }
 

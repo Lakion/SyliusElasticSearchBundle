@@ -112,6 +112,20 @@ final class ProductContext implements Context
     }
 
     /**
+     * @When /^I filter them by (channel "[^"]+") and price between ("[^"]+") and ("[^"]+")$/
+     */
+    public function iFilterThemByChannelAndPriceBetweenAnd(ChannelInterface $channel, $graterThan, $lessThan)
+    {
+        sleep(3);
+        $criteria = Criteria::fromQueryParameters(Product::class, [
+            'channel_code' => $channel->getCode(),
+            'product_price_range' => ['grater_than'=> $graterThan, 'less_than' => $lessThan]
+        ]);
+
+        $this->match($criteria);
+    }
+
+    /**
      * @When I filter them by :taxon taxon
      */
     public function iFilterThemByTaxon(TaxonInterface $taxon)
