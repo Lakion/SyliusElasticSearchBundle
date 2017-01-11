@@ -14,16 +14,15 @@ namespace Lakion\SyliusElasticSearchBundle\Form\Type;
 use Doctrine\ORM\EntityRepository;
 use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
 use FOS\ElasticaBundle\Repository;
-use Lakion\SyliusElasticSearchBundle\Form\DataTransformer\FilterSetTransformer;
+use Lakion\SyliusElasticSearchBundle\Form\DataTransformer\ProductOptionCodesToStringTransformer;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\QueryFactoryInterface;
 use ONGR\ElasticsearchDSL\Aggregation\FiltersAggregation;
-use ONGR\ElasticsearchDSL\Query\NestedQuery;
-use ONGR\ElasticsearchDSL\Query\TermQuery;
 use ONGR\ElasticsearchDSL\Search;
 use Sylius\Component\Core\Model\Product;
 use Sylius\Component\Product\Model\ProductOptionValue;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -38,11 +37,28 @@ final class ProductOptionValueFilter extends AbstractType
     private $repositoryManager;
 
     /**
-     * @param RepositoryManagerInterface $repositoryManager
+     * @var QueryFactoryInterface
      */
-    public function __construct(RepositoryManagerInterface $repositoryManager)
-    {
+    private $productHasOptionCodeQueryFactory;
+
+    /**
+     * @var RepositoryInterface
+     */
+    private $productOptionValueRepository;
+
+    /**
+     * @param RepositoryManagerInterface $repositoryManager
+     * @param QueryFactoryInterface $productHasOptionCodeQueryFactory
+     * @param RepositoryInterface $productOptionValueRepository
+     */
+    public function __construct(
+        RepositoryManagerInterface $repositoryManager,
+        QueryFactoryInterface $productHasOptionCodeQueryFactory,
+        RepositoryInterface $productOptionValueRepository
+    ) {
         $this->repositoryManager = $repositoryManager;
+        $this->productHasOptionCodeQueryFactory = $productHasOptionCodeQueryFactory;
+        $this->productOptionValueRepository = $productOptionValueRepository;
     }
 
     /**
@@ -66,6 +82,7 @@ final class ProductOptionValueFilter extends AbstractType
                         ->setParameter('optionCode', $options['code']);
                 },
                 'choice_label' => function (ProductOptionValue $productOptionValue) {
+
                     /** @var Repository $repository */
                     $repository = $this->repositoryManager->getRepository(Product::class);
                     $query = $this->buildAggregation($productOptionValue->getCode())->toArray();
@@ -79,6 +96,8 @@ final class ProductOptionValueFilter extends AbstractType
                 'expanded' => true,
             ])
         ;
+
+        $builder->addModelTransformer(new ProductOptionCodesToStringTransformer());
     }
 
     /**
@@ -108,13 +127,9 @@ final class ProductOptionValueFilter extends AbstractType
         $hasOptionValueAggregation = new FiltersAggregation($code);
 
         $hasOptionValueAggregation->addFilter(
-            new NestedQuery(
-                'variants',
-                    new NestedQuery(
-                        'variants.optionValues',
-                            new TermQuery('variants.optionValues.code', $code)
-                    )
-            ), $code);
+            $this->productHasOptionCodeQueryFactory->create(['option_value_code' => $code]),
+            $code
+        );
 
         $aggregationSearch = new Search();
         $aggregationSearch->addAggregation($hasOptionValueAggregation);

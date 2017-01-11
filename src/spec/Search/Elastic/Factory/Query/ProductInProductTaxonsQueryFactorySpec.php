@@ -3,7 +3,7 @@
 namespace spec\Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query;
 
 use Lakion\SyliusElasticSearchBundle\Exception\MissingQueryParameterException;
-use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductHasOptionCode;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInProductTaxonsQueryFactory;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\QueryFactoryInterface;
 use ONGR\ElasticsearchDSL\Query\NestedQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
@@ -12,11 +12,11 @@ use PhpSpec\ObjectBehavior;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class ProductHasOptionCodeSpec extends ObjectBehavior
+final class ProductInProductTaxonsQueryFactorySpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType(ProductHasOptionCode::class);
+        $this->shouldHaveType(ProductInProductTaxonsQueryFactory::class);
     }
 
     function it_is_query_factory()
@@ -24,11 +24,9 @@ final class ProductHasOptionCodeSpec extends ObjectBehavior
         $this->shouldImplement(QueryFactoryInterface::class);
     }
 
-    function it_creates_query_for_product_option_code()
+    function it_returns_query_for_given_criteria()
     {
-        $nestedQuery = new NestedQuery('variants', new NestedQuery('variants.optionValues', new TermQuery('variants.optionValues.code', 't-shirt-color')));
-
-        $this->create(['option_value_code' => 't-shirt-color'])->shouldBeLike($nestedQuery);
+        $this->create(['taxon_code' => 'mugs'])->shouldBeLike(new NestedQuery('productTaxons', new TermQuery('productTaxons.taxon.code', 'mugs')));
     }
 
     function it_cannot_create_query_if_there_is_no_required_parameters()

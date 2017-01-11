@@ -6,7 +6,7 @@ use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
 use FOS\ElasticaBundle\Paginator\PaginatorAdapterInterface;
 use FOS\ElasticaBundle\Repository;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
-use Lakion\SyliusElasticSearchBundle\Search\Elastic\Builder\BuilderInterface;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\SearchCriteriaApplicatorInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\ElasticSearchEngine;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search\SearchFactoryInterface;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
@@ -63,14 +63,14 @@ final class ElasticSearchEngineSpec extends ObjectBehavior
         Search $search,
         Repository $repository,
         PaginatorAdapterInterface $paginatorAdapter,
-        BuilderInterface $productByOptionBuilder
+        SearchCriteriaApplicatorInterface $productByOptionApplicator
     ) {
         $criteria = Criteria::fromQueryParameters('product', ['name' => 'banana']);
-        $this->addBuilder($productByOptionBuilder);
+        $this->addSearchCriteriaApplicator($productByOptionApplicator);
         $searchFactory->create()->willReturn($search);
 
-        $productByOptionBuilder->supports($criteria)->willReturn(true);
-        $productByOptionBuilder->build($criteria, $search)->shouldBeCalled();
+        $productByOptionApplicator->supports($criteria)->willReturn(true);
+        $productByOptionApplicator->apply($criteria, $search)->shouldBeCalled();
 
         $repositoryManager->getRepository('product')->willReturn($repository);
         $search->toArray()->willReturn([

@@ -8,7 +8,7 @@ use ONGR\ElasticsearchDSL\Query\TermQuery;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class ProductInMainTaxon implements QueryFactoryInterface
+final class ProductInMainTaxonQueryFactory implements QueryFactoryInterface
 {
     /**
      * {@inheritdoc}

@@ -9,7 +9,7 @@ use ONGR\ElasticsearchDSL\Query\TermQuery;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class ProductInProductTaxons implements QueryFactoryInterface
+final class ProductInProductTaxonsQueryFactory implements QueryFactoryInterface
 {
     /**
      * {@inheritdoc}

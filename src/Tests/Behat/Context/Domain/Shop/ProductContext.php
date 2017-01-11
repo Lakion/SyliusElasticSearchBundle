@@ -51,11 +51,7 @@ final class ProductContext implements Context
     public function iFilterThemByDoubleMugType($mugTypeValue)
     {
         $criteria = Criteria::fromQueryParameters(Product::class, [
-            'filter_set' => [
-                'mug_type' => [
-                    'product_option_code' => [sprintf('mug_type_%s', $mugTypeValue)]
-                ]
-            ]
+            'product_option_code' => sprintf('mug_type_%s', $mugTypeValue)
         ]);
 
         $this->match($criteria);
@@ -67,14 +63,7 @@ final class ProductContext implements Context
     public function iFilterThemByDoubleMugTypeAndStickerSize($mugTypeValue, $stickerSizeValue)
     {
         $criteria = Criteria::fromQueryParameters(Product::class, [
-            'filter_set' => [
-                'mug_type' => [
-                    'product_option_code' => [sprintf('mug_type_%s', $mugTypeValue)]
-                ],
-                'sticker_size' => [
-                    'product_option_code' => [sprintf('sticker_size_%s', $stickerSizeValue)]
-                ]
-            ]
+            'product_option_code' => sprintf('mug_type_%s+sticker_size_%s', $mugTypeValue, $stickerSizeValue),
         ]);
 
         $this->match($criteria);
@@ -86,11 +75,7 @@ final class ProductContext implements Context
     public function iFilterThemByStickierSize($stickerSizeValue)
     {
         $criteria = Criteria::fromQueryParameters(Product::class, [
-            'filter_set' => [
-                'mug_type' => [
-                    'product_option_code' => [sprintf('sticker_size_%s', $stickerSizeValue)]
-                ]
-            ]
+            'product_option_code' => sprintf('sticker_size_%s', $stickerSizeValue)
         ]);
 
         $this->match($criteria);

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="lakion_sylius_elastic_search.query_factory.product_has_option_code" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductHasOptionCodeQueryFactory" />
+        <service id="lakion_sylius_elastic_search.query_factory.empty_criteria" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\EmptyCriteriaQueryFactory" />
+        <service id="lakion_sylius_elastic_search.query_factory.product_in_main_taxon" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInMainTaxonQueryFactory" />
+        <service id="lakion_sylius_elastic_search.query_factory.product_in_product_taxons" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInProductTaxonsQueryFactory" />
+    </services>
+</container>

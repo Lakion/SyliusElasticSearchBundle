@@ -2,7 +2,7 @@
 
 namespace spec\Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query;
 
-use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\EmptyCriteria;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\EmptyCriteriaQueryFactory;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\QueryFactoryInterface;
 use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use PhpSpec\ObjectBehavior;
@@ -10,11 +10,11 @@ use PhpSpec\ObjectBehavior;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class EmptyCriteriaSpec extends ObjectBehavior
+final class EmptyCriteriaQueryFactorySpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType(EmptyCriteria::class);
+        $this->shouldHaveType(EmptyCriteriaQueryFactory::class);
     }
 
     function it_is_query_factory()

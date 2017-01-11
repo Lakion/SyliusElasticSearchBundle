@@ -5,7 +5,7 @@ namespace Lakion\SyliusElasticSearchBundle\Search\Elastic;
 use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
 use FOS\ElasticaBundle\Repository;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
-use Lakion\SyliusElasticSearchBundle\Search\Elastic\Builder\BuilderInterface;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\SearchCriteriaApplicatorInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search\SearchFactoryInterface;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
 
@@ -25,9 +25,9 @@ final class ElasticSearchEngine implements SearchEngineInterface
     private $searchFactory;
 
     /**
-     * @var BuilderInterface[]
+     * @var SearchCriteriaApplicatorInterface[]
      */
-    private $builders = [];
+    private $searchCriteriaApplicators = [];
 
     /**
      * @param RepositoryManagerInterface $repositoryManager
@@ -40,11 +40,11 @@ final class ElasticSearchEngine implements SearchEngineInterface
     }
 
     /**
-     * @param BuilderInterface $builder
+     * @param SearchCriteriaApplicatorInterface $searchCriteriaApplicator
      */
-    public function addBuilder(BuilderInterface $builder)
+    public function addSearchCriteriaApplicator(SearchCriteriaApplicatorInterface $searchCriteriaApplicator)
     {
-        $this->builders[] = $builder;
+        $this->searchCriteriaApplicators[] = $searchCriteriaApplicator;
     }
 
     /**
@@ -53,9 +53,9 @@ final class ElasticSearchEngine implements SearchEngineInterface
     public function match(Criteria $criteria)
     {
         $search = $this->searchFactory->create();
-        foreach ($this->builders as $builder) {
-            if ($builder->supports($criteria)) {
-                $builder->build($criteria, $search);
+        foreach ($this->searchCriteriaApplicators as $applicator) {
+            if ($applicator->supports($criteria)) {
+                $applicator->apply($criteria, $search);
             }
         }
 

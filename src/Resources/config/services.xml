@@ -7,9 +7,9 @@
     <imports>
         <import resource="services/controller.xml"/>
         <import resource="services/form.xml"/>
-        <import resource="services/search_builder.xml"/>
+        <import resource="services/query_factory.xml" />
+        <import resource="services/search_criteria_applicator.xml" />
         <import resource="services/search_engine.xml"/>
-        <import resource="services/search_specification.xml"/>
     </imports>
     <services>
         <service id="lakion_sylius_elastic_search.factory.search" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search\SearchFactory" />

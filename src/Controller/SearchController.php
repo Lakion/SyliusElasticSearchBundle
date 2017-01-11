@@ -63,16 +63,18 @@ final class SearchController
      */
     public function filterAction(Request $request)
     {
-        $criteria = Criteria::fromQueryParameters($this->getResourceClassFrom($request), array_merge($request->query->all(), $request->attributes->all()));
-
         $view = View::create();
         if ($this->isHtmlRequest($request)) {
-            $view->setTemplate($this->getTemplateFrom($request));
+            $view->setTemplate($this->getTemplateFromRequest($request));
         }
+
+        $form = $this->formFactory->create(FilterSetType::class, Criteria::fromQueryParameters($this->getResourceClassFromRequest($request), []), ['filter_set' => $this->getFilterScopeFromRequest($request)]);
+        $form->handleRequest($request);
+        $criteria = $form->getData();
+        $criteria = Criteria::fromQueryParameters($this->getResourceClassFromRequest($request), array_merge($request->query->all(), $request->attributes->all(), $criteria->getFiltering()->getFields()));
 
         $result = $this->searchEngine->match($criteria);
         $partialResult = $result->getResults($criteria->getPaginating()->getOffset(), $criteria->getPaginating()->getItemsPerPage());
-        $form = $this->formFactory->create(FilterSetType::class, null, ['filter_set' => $this->getFilterScope($request)]);
 
         $view->setData([
             'resources' => $partialResult->toArray(),
@@ -88,7 +90,7 @@ final class SearchController
      *
      * @return string
      */
-    private function getTemplateFrom(Request $request)
+    private function getTemplateFromRequest(Request $request)
     {
         $syliusAttributes = $request->attributes->get('_sylius');
 
@@ -104,7 +106,7 @@ final class SearchController
      *
      * @return string
      */
-    private function getResourceClassFrom(Request $request)
+    private function getResourceClassFromRequest(Request $request)
     {
         $syliusAttributes = $request->attributes->get('_sylius');
 
@@ -130,7 +132,7 @@ final class SearchController
      *
      * @return string
      */
-    private function getFilterScope(Request $request)
+    private function getFilterScopeFromRequest(Request $request)
     {
         $syliusAttributes = $request->attributes->get('_sylius');
 

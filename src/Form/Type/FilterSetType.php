@@ -12,6 +12,7 @@
 namespace Lakion\SyliusElasticSearchBundle\Form\Type;
 
 use Lakion\SyliusElasticSearchBundle\Form\Configuration\FilterSet;
+use Lakion\SyliusElasticSearchBundle\Form\DataMapper\CriteriaDataMapper;
 use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -57,6 +58,8 @@ final class FilterSetType extends AbstractType
                 $filter->getOptions()
             );
         }
+
+        $builder->setDataMapper(new CriteriaDataMapper());
     }
 
     /**

@@ -11,8 +11,8 @@
 
 namespace Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query;
 
-use Elastica\QueryBuilder\DSL;
 use Lakion\SyliusElasticSearchBundle\Exception\MissingQueryParameterException;
+use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
@@ -22,7 +22,7 @@ interface QueryFactoryInterface
     /**
      * @param array $parameters
      *
-     * @return DSL
+     * @return BuilderInterface
      *
      * @throws MissingQueryParameterException
      */
