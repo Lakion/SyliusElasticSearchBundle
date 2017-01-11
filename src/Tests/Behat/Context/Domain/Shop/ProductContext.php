@@ -16,6 +16,7 @@ use FOS\ElasticaBundle\Paginator\PaginatorAdapterInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\Product;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Webmozart\Assert\Assert;
@@ -86,7 +87,7 @@ final class ProductContext implements Context
      */
     public function iFilterThemByPriceBetweenAnd($graterThan, $lessThan)
     {
-        sleep(5);
+        sleep(3);
         $criteria = Criteria::fromQueryParameters(Product::class, ['product_price_range' => ['grater_than'=> $graterThan, 'less_than' => $lessThan]]);
         $this->match($criteria);
     }
@@ -97,6 +98,16 @@ final class ProductContext implements Context
     public function iViewTheListOfTheProductsWithoutFiltering()
     {
         $criteria = Criteria::fromQueryParameters(Product::class, []);
+        $this->match($criteria);
+    }
+
+    /**
+     * @When /^I filter them by (channel "[^"]+")$/
+     */
+    public function iFilterThemByChannel(ChannelInterface $channel)
+    {
+        sleep(3);
+        $criteria = Criteria::fromQueryParameters(Product::class, ['channel_code' => $channel->getCode()]);
         $this->match($criteria);
     }
 

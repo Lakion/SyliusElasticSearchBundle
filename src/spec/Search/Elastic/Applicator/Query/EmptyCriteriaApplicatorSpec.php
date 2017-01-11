@@ -39,7 +39,7 @@ final class EmptyCriteriaApplicatorSpec extends ObjectBehavior
 
     function it_does_not_support_criteria_if_they_do_not_satisifies_speciciation()
     {
-        $criteria = Criteria::fromQueryParameters('product', ['query' => 'banana']);
+        $criteria = Criteria::fromQueryParameters('product', ['search' => 'banana']);
 
         $this->supports($criteria)->shouldReturn(false);
     }

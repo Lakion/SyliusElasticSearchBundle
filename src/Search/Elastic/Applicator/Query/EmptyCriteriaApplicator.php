@@ -30,7 +30,7 @@ final class EmptyCriteriaApplicator implements SearchCriteriaApplicatorInterface
      */
     public function supports(Criteria $criteria)
     {
-        return !array_key_exists('query', $criteria->getFiltering()->getFields());
+        return !array_key_exists('search', $criteria->getFiltering()->getFields());
     }
 
     /**

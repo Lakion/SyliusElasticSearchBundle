@@ -14,6 +14,7 @@ namespace Lakion\SyliusElasticSearchBundle\Tests\Behat\Context\Ui\Shop;
 use Behat\Behat\Context\Context;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Lakion\SyliusElasticSearchBundle\Tests\Behat\Page\Product\IndexPageInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\Product;
 use Webmozart\Assert\Assert;
 
@@ -41,7 +42,7 @@ final class ProductContext implements Context
     public function iFilterThemByDoubleMugType($mugTypeValue)
     {
         $this->indexPage->open(['per_page' => 100]);
-        $this->indexPage->filter(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['mug_type' => $mugTypeValue]]));
+        $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['mug_type' => $mugTypeValue]]));
     }
 
     /**
@@ -50,7 +51,7 @@ final class ProductContext implements Context
     public function iFilterThemByDoubleMugTypeAndStickerSize($mugTypeValue, $stickerSizeValue)
     {
         $this->indexPage->open(['per_page' => 100]);
-        $this->indexPage->filter(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['mug_type' => $mugTypeValue, 'sticker_size' => $stickerSizeValue]]));
+        $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['mug_type' => $mugTypeValue, 'sticker_size' => $stickerSizeValue]]));
     }
 
     /**
@@ -59,7 +60,7 @@ final class ProductContext implements Context
     public function iFilterThemByStickierSize($stickerSizeValue)
     {
         $this->indexPage->open(['per_page' => 100]);
-        $this->indexPage->filter(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['sticker_size' => $stickerSizeValue]]));
+        $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['sticker_size' => $stickerSizeValue]]));
     }
 
     /**
