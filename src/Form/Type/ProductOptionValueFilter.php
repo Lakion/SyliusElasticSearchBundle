@@ -69,7 +69,7 @@ final class ProductOptionValueFilter extends AbstractType
         $builder->add(
             'product_option_code',
             EntityType::class, [
-                'class' => ProductOptionValue::class,
+                'class' => $options['class'],
                 'choice_value' => function (ProductOptionValue $productOptionValue) {
                     return $productOptionValue->getCode();
                 },
@@ -105,8 +105,12 @@ final class ProductOptionValueFilter extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired('code');
-        $resolver->setAllowedTypes('code', 'string');
+        $resolver
+            ->setDefault('class', ProductOptionValue::class)
+            ->setRequired('code')
+            ->setAllowedTypes('code', 'string')
+            ->setAllowedTypes('class', 'string')
+        ;
     }
 
     /**

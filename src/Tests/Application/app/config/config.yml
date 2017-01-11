@@ -45,11 +45,8 @@ lakion_sylius_elastic_search:
     filter_sets:
         products_option:
             filters:
-                mug_type:
-                    type: option
+                product_options:
+                    type: options
                     options:
-                        code: mug_type
-                sticker_size:
-                    type: option
-                    options:
-                        code: sticker_size
+                        codes: [mug_type, sticker_size]
+                        filtering_key: product_option_code

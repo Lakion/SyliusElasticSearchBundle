@@ -16,6 +16,8 @@ use Lakion\SyliusElasticSearchBundle\Form\DataMapper\CriteriaDataMapper;
 use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -51,7 +53,7 @@ final class FilterSetType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->filterSets[$options['filter_set']]->getFilters() as $name => $filter) {
+        foreach ($this->filterSets[$options['filter_set']]->getFilters() as $filter) {
             $builder->add(
                 $filter->getName(),
                 $this->filterTypeRegistry->get('default', $filter->getType()),

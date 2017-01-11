@@ -33,11 +33,10 @@ final class CriteriaDataMapper implements DataMapperInterface
     {
         $forms = iterator_to_array($forms);
 
-        $filtering = ['product_option_code' => ''];
+        $filtering = [];
         foreach ($forms as $form) {
-            $filtering['product_option_code'] .= $form->getData().'+';
+            $filtering[$form->getConfig()->getOption('filtering_key')] = $form->getData();
         }
-        $filtering['product_option_code'] = rtrim($filtering['product_option_code'], '+');
 
         $data = Criteria::fromQueryParameters($data->getResourceAlias(), $filtering);
     }

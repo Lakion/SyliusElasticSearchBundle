@@ -63,7 +63,7 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
     protected function getDefinedElements()
     {
         return array_merge(parent::getDefinedElements(), [
-            'filter_option' => '#filter_set_%filter_type%_%filter_field_name%_%filter_value%',
+            'filter_option' => '#filter_set_product_options_%filter_type%_%filter_field_name%_%filter_value%',
             'products' => '#products',
         ]);
     }
