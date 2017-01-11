@@ -12,7 +12,7 @@ final class EmptyCriteriaQueryFactory implements QueryFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create($parameters = [])
+    public function create(array $parameters = [])
     {
         return new MatchAllQuery();
     }

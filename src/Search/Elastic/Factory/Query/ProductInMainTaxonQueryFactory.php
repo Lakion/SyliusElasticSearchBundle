@@ -13,7 +13,7 @@ final class ProductInMainTaxonQueryFactory implements QueryFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create($parameters = [])
+    public function create(array $parameters = [])
     {
         if (!isset($parameters['taxon_code'])) {
             throw new MissingQueryParameterException('taxon_code', get_class($this));

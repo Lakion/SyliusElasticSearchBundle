@@ -5,11 +5,13 @@ default:
                 - lakion_sylius_elastic_search.behat.context.hook.elastic_search
                 - sylius.behat.context.hook.doctrine_orm
 
+                - sylius.behat.context.transform.lexical
                 - sylius.behat.context.transform.taxon
 
                 - lakion_sylius_elastic_search.behat.context.setup.product
                 - sylius.behat.context.setup.channel
                 - sylius.behat.context.setup.taxonomy
+                - sylius.behat.context.setup.product
 
                 - lakion_sylius_elastic_search.behat.context.domain.shop.product
             filters:

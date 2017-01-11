@@ -26,5 +26,5 @@ interface QueryFactoryInterface
      *
      * @throws MissingQueryParameterException
      */
-    public function create($parameters = []);
+    public function create(array $parameters = []);
 }

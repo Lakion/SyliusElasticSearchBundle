@@ -14,7 +14,7 @@ final class ProductHasOptionCodeQueryFactory implements QueryFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create($parameters = [])
+    public function create(array $parameters = [])
     {
         if (!isset($parameters['option_value_code'])) {
             throw new MissingQueryParameterException('option_value_code', get_class($this));

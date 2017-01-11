@@ -6,9 +6,12 @@ Feature: Filtering list of products by price range
 
     Background:
         Given the store operates on a single channel in "United States"
-        And the store has 10 Mugs, 20 Stickers and 25 Books
+        And the store has a product "Banana t-shirt" priced at "$100"
+        And the store also has a product "Star wars t-shirt" priced at "$150"
+        And the store also has a product "LOTR t-shirt" priced at "$300"
+        And the store also has a product "Breaking bad t-shirt" priced at "$50"
 
-    @todo
+    @domain
     Scenario: Filtering products by price range
-        When I filter them by price between 100 and 200
-        Then I should see 5 products on the list
+        When I filter them by price between "$100" and "$200"
+        Then I should see 2 products on the list

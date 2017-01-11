@@ -18,5 +18,9 @@
             <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_in_product_taxons" />
             <tag name="search_criteria_applicator" />
         </service>
+        <service id="lakion_sylius_elastic_search.search_criteria_applicator.product_in_price_range" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductInPriceRangeApplicator">
+            <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_in_price_range" />
+            <tag name="search_criteria_applicator" />
+        </service>
     </services>
 </container>
