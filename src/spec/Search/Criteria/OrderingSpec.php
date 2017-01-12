@@ -22,7 +22,7 @@ final class OrderingSpec extends ObjectBehavior
         ]]);
 
         $this->getField()->shouldReturn('code');
-        $this->getDirection()->shouldReturn('ASC');
+        $this->getDirection()->shouldReturn('asc');
     }
 
     function it_can_be_created_from_query_parameters()
@@ -32,6 +32,6 @@ final class OrderingSpec extends ObjectBehavior
         ]]);
 
         $this->getField()->shouldReturn('code');
-        $this->getDirection()->shouldReturn('DESC');
+        $this->getDirection()->shouldReturn('desc');
     }
 }

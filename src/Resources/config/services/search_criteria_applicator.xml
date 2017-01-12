@@ -26,5 +26,9 @@
             <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_in_channel" />
             <tag name="search_criteria_applicator" />
         </service>
+        <service id="lakion_sylius_elastic_search.search_criteria_applicator.sort_by_field" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Sort\SortByFieldApplicator">
+            <argument type="service" id="lakion_sylius_elastic_search.query_factory.sort_by_field" />
+            <tag name="search_criteria_applicator" />
+        </service>
     </services>
 </container>

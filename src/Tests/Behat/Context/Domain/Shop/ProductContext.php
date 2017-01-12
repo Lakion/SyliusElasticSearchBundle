@@ -18,6 +18,7 @@ use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\Product;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Webmozart\Assert\Assert;
 
@@ -52,7 +53,7 @@ final class ProductContext implements Context
     public function iFilterThemByDoubleMugType($mugTypeValue)
     {
         $criteria = Criteria::fromQueryParameters(Product::class, [
-            'product_option_code' => sprintf('mug_type_%s', $mugTypeValue)
+            'product_option_code' => sprintf('mug_type_%s', $mugTypeValue),
         ]);
 
         $this->match($criteria);
@@ -76,7 +77,7 @@ final class ProductContext implements Context
     public function iFilterThemByStickierSize($stickerSizeValue)
     {
         $criteria = Criteria::fromQueryParameters(Product::class, [
-            'product_option_code' => sprintf('sticker_size_%s', $stickerSizeValue)
+            'product_option_code' => sprintf('sticker_size_%s', $stickerSizeValue),
         ]);
 
         $this->match($criteria);
@@ -119,7 +120,7 @@ final class ProductContext implements Context
         sleep(3);
         $criteria = Criteria::fromQueryParameters(Product::class, [
             'channel_code' => $channel->getCode(),
-            'product_price_range' => ['grater_than'=> $graterThan, 'less_than' => $lessThan]
+            'product_price_range' => ['grater_than'=> $graterThan, 'less_than' => $lessThan],
         ]);
 
         $this->match($criteria);
@@ -135,6 +136,20 @@ final class ProductContext implements Context
     }
 
     /**
+     * @When I sort them by :field in :order order
+     */
+    public function iSortThemByNameInAscendingOrder($field, $order)
+    {
+        sleep(3);
+        if ('descending' === $order) {
+            $field = '-' . $field;
+        }
+
+        $criteria = Criteria::fromQueryParameters(Product::class, ['sort' => $field]);
+        $this->match($criteria);
+    }
+
+    /**
      * @Then I should see :numberOfProducts products on the list
      */
     public function iShouldSeeProductsOnTheList($numberOfProducts)
@@ -143,6 +158,33 @@ final class ProductContext implements Context
         $result = $this->sharedStorage->get('search_result');
 
         Assert::eq($result->getTotalHits(), $numberOfProducts);
+    }
+
+    /**
+     * @Then /^I should see products in order like "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)"$/
+     */
+    public function iShouldSeeProductsInOrderLike(...$productNames)
+    {
+        /** @var PaginatorAdapterInterface $result */
+        $searchResult = $this->sharedStorage->get('search_result');
+        $partialResult = $searchResult->getResults(0, 100);
+
+        /**
+         * @var int $position
+         * @var  ProductInterface $result
+         */
+        foreach ($partialResult->toArray() as $position => $result) {
+            if ($result->getName() !== $productNames[$position]) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Sorting failed at position "%s" expected value was "%s", but got "%s"',
+                        $position+1,
+                        $productNames[$position],
+                        $result
+                    )
+                );
+            }
+        }
     }
 
     /**

@@ -9,8 +9,8 @@ final class Ordering
 {
     const DEFAULT_FIELD = 'name';
     const DEFAULT_DIRECTION = self::ASCENDING_DIRECTION;
-    const ASCENDING_DIRECTION = 'ASC';
-    const DESCENDING_DIRECTION = 'DESC';
+    const ASCENDING_DIRECTION = 'asc';
+    const DESCENDING_DIRECTION = 'desc';
 
     /**
      * @var string

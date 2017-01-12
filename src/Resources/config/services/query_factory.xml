@@ -9,7 +9,8 @@
         <service id="lakion_sylius_elastic_search.query_factory.empty_criteria" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\EmptyCriteriaQueryFactory" />
         <service id="lakion_sylius_elastic_search.query_factory.product_in_main_taxon" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInMainTaxonQueryFactory" />
         <service id="lakion_sylius_elastic_search.query_factory.product_in_product_taxons" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInProductTaxonsQueryFactory" />
-        <service id="lakion_sylius_elastic_search.query_factory.product_in_price_range" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInPriceRangeQueryFactory"/>
-        <service id="lakion_sylius_elastic_search.query_factory.product_in_channel" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInChannelQueryFactory"/>
+        <service id="lakion_sylius_elastic_search.query_factory.product_in_price_range" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInPriceRangeQueryFactory" />
+        <service id="lakion_sylius_elastic_search.query_factory.product_in_channel" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInChannelQueryFactory" />
+        <service id="lakion_sylius_elastic_search.query_factory.sort_by_field" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Sort\SortByFieldQueryFactory" />
     </services>
 </container>
