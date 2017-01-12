@@ -11,6 +11,7 @@
 
 namespace Lakion\SyliusElasticSearchBundle\Tests\Behat\Page\Product;
 
+use Behat\Mink\Element\NodeElement;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Sylius\Behat\Page\SymfonyPageInterface;
 
@@ -33,7 +34,7 @@ interface IndexPageInterface extends SymfonyPageInterface
     public function filter();
 
     /**
-     * @return array
+     * @return NodeElement[]
      */
     public function getAllProducts();
 }

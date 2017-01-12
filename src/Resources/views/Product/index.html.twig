@@ -3,6 +3,15 @@
 <button type="submit">{{ 'sylius.ui.filter'|trans }}</button>
 {{ form_end(form) }}
 
+<form method="get">
+    <input type="hidden" name="sort" value="-name">
+    <button type="submit">Sort by name descending</button>
+</form>
+<form method="get">
+    <input type="hidden" name="sort" value="name">
+    <button type="submit">Sort by name ascending</button>
+</form>
+
 <ul id="products">
 {% for product in resources %}
     <li>{{ product.name }}</li>

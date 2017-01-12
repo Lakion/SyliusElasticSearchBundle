@@ -5,6 +5,7 @@ default:
                 - lakion_sylius_elastic_search.behat.context.hook.elastic_search
                 - sylius.behat.context.hook.doctrine_orm
 
+                - sylius.behat.context.transform.channel
                 - sylius.behat.context.transform.lexical
                 - sylius.behat.context.transform.taxon
 

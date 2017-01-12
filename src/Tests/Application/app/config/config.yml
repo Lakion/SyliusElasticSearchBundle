@@ -43,7 +43,7 @@ sylius_grid:
 
 lakion_sylius_elastic_search:
     filter_sets:
-        products_option:
+        mug_type_and_stickers_set:
             filters:
                 product_options:
                     type: options

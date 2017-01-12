@@ -6,6 +6,6 @@ lakion_elastic_search_shop_product_index:
         _sylius:
             template: "@LakionSyliusElasticSearch/Product/index.html.twig"
             resource_class: Sylius\Component\Core\Model\Product
-            filter_set: products_option
+            filter_set: mug_type_and_stickers_set
     requirements:
         slug: .+

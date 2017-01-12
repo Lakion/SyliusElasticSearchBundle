@@ -67,6 +67,19 @@ final class ProductContext implements Context
     }
 
     /**
+     * @When I sort them by :field in :order order
+     */
+    public function iSortThemByNameInAscendingOrder($field, $order)
+    {
+        sleep(3);
+        if ('descending' === $order) {
+            $field = '-' . $field;
+        }
+
+        $this->indexPage->open(['sort' => $field]);
+    }
+
+    /**
      * @When /^I filter them by price between ("[^"]+") and ("[^"]+")$/
      */
     public function iFilterThemByPriceBetweenAnd($graterThan, $lessThan)
@@ -91,5 +104,24 @@ final class ProductContext implements Context
     public function iShouldSeeProductsOnTheList($numberOfProducts)
     {
         Assert::eq(count($this->indexPage->getAllProducts()), $numberOfProducts);
+    }
+
+    /**
+     * @Then /^I should see products in order like "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)"$/
+     */
+    public function iShouldSeeProductsInOrderLike(...$productNames)
+    {
+        foreach ($this->indexPage->getAllProducts() as $position => $result) {
+            if ($result->getText() !== $productNames[$position]) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Sorting failed at position "%s" expected value was "%s", but got "%s"',
+                        $position+1,
+                        $productNames[$position],
+                        $result
+                    )
+                );
+            }
+        }
     }
 }
