@@ -1,6 +1,84 @@
 fos_elastica:
     clients:
-        default: { host: 127.0.0.1, port: 9200 }
+        default:
+            servers:
+                - { host: 127.0.0.1, port: 9200 }
     indexes:
         sylius:
             client: default
+            finder: ~
+            types:
+                product:
+                    mappings:
+                        id: { type: integer}
+                        code: { type: string }
+                        name: { type: string, index: not_analyzed }
+                        description: { type: string }
+                        shortDescription: { type: string }
+                        slug: { type: string }
+                        translations:
+                            type: "nested"
+                            properties:
+                                locale: { type: string }
+                                name: { type: string }
+                                metaKeywords: { type: string }
+                                metaDescription: { type: string }
+                        variants:
+                            type: "nested"
+                            properties:
+                                code: { type: string }
+                                availableOn: { type: date }
+                                availableUntil: { type: date }
+                                name: { type: string }
+                                onHand: { type: integer }
+                                onHold: { type: integer }
+                                channelPricings:
+                                    type: "nested"
+                                    properties:
+                                        price: { type: integer }
+                                        channel:
+                                            type: "object"
+                                            properties:
+                                                code: { type: string }
+                                optionValues:
+                                    type: "nested"
+                                    properties:
+                                        name: { type: string }
+                                        value: { type: string }
+                                        code: { type: string }
+                        attributes:
+                            type: "nested"
+                            properties:
+                                value: { type: string }
+                        channels:
+                            type: "nested"
+                            properties:
+                                code: { type: string }
+                        productTaxons:
+                            type: "nested"
+                            properties:
+                                taxon:
+                                    type: "object"
+                                    properties:
+                                        code: { type: string }
+                                        name: { type: string }
+                                position: { type: integer }
+                        mainTaxon:
+                            type: "object"
+                            properties:
+                                slug: { type: string }
+                                code: { type: string }
+                                name: { type: string }
+                        images:
+                            type: "nested"
+                            properties:
+                                path: { type: string }
+                                code: { type: string }
+                        enabled: { type: boolean }
+                        isSimple: { type: boolean }
+                    persistence:
+                        driver: orm
+                        model: "%sylius.model.product.class%"
+                        provider: ~
+                        listener: ~
+                        finder: ~

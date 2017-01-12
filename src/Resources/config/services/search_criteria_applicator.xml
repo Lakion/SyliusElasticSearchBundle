@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="lakion_sylius_elastic_search.search_criteria_applicator.product_has_multiple_option_codes" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductHasMultipleOptionCodesApplicator">
+            <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_has_option_code" />
+            <tag name="search_criteria_applicator" />
+        </service>
+        <service id="lakion_sylius_elastic_search.search_criteria_applicator.empty_criteria" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Query\EmptyCriteriaApplicator">
+            <argument type="service" id="lakion_sylius_elastic_search.query_factory.empty_criteria" />
+            <tag name="search_criteria_applicator" />
+        </service>
+        <service id="lakion_sylius_elastic_search.search_criteria_applicator.product_in_taxon" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductInTaxonApplicator">
+            <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_in_main_taxon" />
+            <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_in_product_taxons" />
+            <tag name="search_criteria_applicator" />
+        </service>
+        <service id="lakion_sylius_elastic_search.search_criteria_applicator.product_in_price_range" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductInPriceRangeApplicator">
+            <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_in_price_range" />
+            <tag name="search_criteria_applicator" />
+        </service>
+        <service id="lakion_sylius_elastic_search.search_criteria_applicator.product_in_channel" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductInChannelApplicator">
+            <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_in_channel" />
+            <tag name="search_criteria_applicator" />
+        </service>
+        <service id="lakion_sylius_elastic_search.search_criteria_applicator.sort_by_field" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Sort\SortByFieldApplicator">
+            <argument type="service" id="lakion_sylius_elastic_search.query_factory.sort_by_field" />
+            <tag name="search_criteria_applicator" />
+        </service>
+    </services>
+</container>

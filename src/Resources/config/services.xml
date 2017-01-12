@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <import resource="services/controller.xml"/>
+        <import resource="services/form.xml"/>
+        <import resource="services/query_factory.xml" />
+        <import resource="services/search_criteria_applicator.xml" />
+        <import resource="services/search_engine.xml"/>
+    </imports>
+    <services>
+        <service id="lakion_sylius_elastic_search.factory.search" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search\SearchFactory" />
+        <service id="lakion_sylius_elastic_search.form_registry.filters" class="Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry" />
+    </services>
+</container>
