@@ -12,6 +12,8 @@
 namespace Lakion\SyliusElasticSearchBundle\Tests\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
+use Behat\Mink\Element\NodeElement;
+use FOS\ElasticaBundle\Paginator\PaginatorAdapterInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Lakion\SyliusElasticSearchBundle\Tests\Behat\Page\Product\IndexPageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -84,10 +86,20 @@ final class ProductContext implements Context
      */
     public function iFilterThemByPriceBetweenAnd($graterThan, $lessThan)
     {
-        sleep(5);
+        sleep(3);
         $this->indexPage->open(['per_page' => 100]);
         $this->indexPage->filterByPriceRange($graterThan, $lessThan);
         $this->indexPage->filter();
+    }
+
+    /**
+     * @When I search for products with name :name
+     */
+    public function iSearchForProductsWithName($name)
+    {
+        sleep(3);
+        $this->indexPage->open(['per_page' => 100]);
+        $this->indexPage->search($name);
     }
 
     /**
@@ -121,6 +133,38 @@ final class ProductContext implements Context
                         $result
                     )
                 );
+            }
+        }
+    }
+
+    /**
+     * @Then /^It should be "([^"]+)"$/
+     * @Then /^It should be "([^"]+)", "([^"]+)"$/
+     * @Then /^It should be "([^"]+)", "([^"]+)", "([^"]+)"$/
+     * @Then /^It should be "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)"$/
+     */
+    public function itShouldBe(...$expectedProductNames)
+    {
+        $resultProductNames = array_map(function (NodeElement $productElement) {
+            return $productElement->getText();
+        }, $this->indexPage->getAllProducts());
+
+        $expectedProductCount = count($expectedProductNames);
+        $resultProductCount = count($resultProductNames);
+
+        if ($expectedProductCount !== $resultProductNames) {
+            throw new \RuntimeException(
+                sprintf('Expected product count was "%s", got "%s"', $expectedProductCount, $resultProductCount)
+            );
+        }
+
+        foreach ($expectedProductNames as $expectedProductName) {
+            if (!in_array($expectedProductName, $resultProductNames)) {
+                throw new \RuntimeException(sprintf(
+                    'Expected product with name "%s", does not exist in search result. Got "%s"',
+                    $expectedProductName,
+                    implode(',', $resultProductNames)
+                ));
             }
         }
     }

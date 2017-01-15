@@ -15,6 +15,6 @@ final class SortByFieldQueryFactory implements SortFactoryInterface
      */
     public function create(Ordering $ordering)
     {
-        return new FieldSort($ordering->getField(), $ordering->getDirection());
+        return new FieldSort('raw_' . $ordering->getField(), $ordering->getDirection());
     }
 }

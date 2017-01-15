@@ -27,20 +27,20 @@ final class SortByFieldQueryFactorySpec extends ObjectBehavior
     {
         $ordering = Ordering::fromQueryParameters(['sort' => '-price']);
 
-        $this->create($ordering)->shouldBeLike(new FieldSort('price', 'desc'));
+        $this->create($ordering)->shouldBeLike(new FieldSort('raw_price', 'desc'));
     }
 
     function it_creates_ascending_field_sort_query()
     {
         $ordering = Ordering::fromQueryParameters(['sort' => 'price']);
 
-        $this->create($ordering)->shouldBeLike(new FieldSort('price', 'asc'));
+        $this->create($ordering)->shouldBeLike(new FieldSort('raw_price', 'asc'));
     }
 
     function it_creates_ascending_by_name_field_sort_query_by_default()
     {
         $ordering = Ordering::fromQueryParameters([]);
 
-        $this->create($ordering)->shouldBeLike(new FieldSort('name', 'asc'));
+        $this->create($ordering)->shouldBeLike(new FieldSort('raw_name', 'asc'));
     }
 }

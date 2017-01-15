@@ -16,6 +16,7 @@ use FOS\RestBundle\View\View;
 use Lakion\SyliusElasticSearchBundle\Form\Type\FilterSetType;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
+use Sylius\Component\Core\Context\ShopperContextInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,6 +41,11 @@ final class SearchController
      * @var FormFactoryInterface
      */
     private $formFactory;
+
+    /**
+     * @var ShopperContextInterface
+     */
+    private $shopperContext;
 
     /**
      * @param ConfigurableViewHandlerInterface $restViewHandler
