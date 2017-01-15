@@ -152,7 +152,7 @@ final class ProductContext implements Context
         $expectedProductCount = count($expectedProductNames);
         $resultProductCount = count($resultProductNames);
 
-        if ($expectedProductCount !== $resultProductNames) {
+        if ($expectedProductCount !== $resultProductCount) {
             throw new \RuntimeException(
                 sprintf('Expected product count was "%s", got "%s"', $expectedProductCount, $resultProductCount)
             );

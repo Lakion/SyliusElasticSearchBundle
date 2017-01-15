@@ -38,8 +38,8 @@ final class ProductPriceRangeFilterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired('filtering_key')
-            ->setAllowedTypes('filtering_key', 'string')
+            ->setRequired('key')
+            ->setAllowedTypes('key', 'string')
         ;
     }
 }

@@ -43,11 +43,6 @@ final class SearchController
     private $formFactory;
 
     /**
-     * @var ShopperContextInterface
-     */
-    private $shopperContext;
-
-    /**
      * @param ConfigurableViewHandlerInterface $restViewHandler
      * @param SearchEngineInterface $searchEngine
      * @param FormFactoryInterface $formFactory
@@ -76,8 +71,16 @@ final class SearchController
 
         $form = $this->formFactory->create(FilterSetType::class, Criteria::fromQueryParameters($this->getResourceClassFromRequest($request), []), ['filter_set' => $this->getFilterScopeFromRequest($request)]);
         $form->handleRequest($request);
+
         $criteria = $form->getData();
-        $criteria = Criteria::fromQueryParameters($this->getResourceClassFromRequest($request), array_merge($request->query->all(), $request->attributes->all(), $criteria->getFiltering()->getFields()));
+        $criteria = Criteria::fromQueryParameters(
+            $this->getResourceClassFromRequest($request),
+            array_merge(
+                $request->query->all(),
+                $request->attributes->all(),
+                $criteria->getFiltering()->getFields()
+            )
+        );
 
         $result = $this->searchEngine->match($criteria);
         $partialResult = $result->getResults($criteria->getPaginating()->getOffset(), $criteria->getPaginating()->getItemsPerPage());
