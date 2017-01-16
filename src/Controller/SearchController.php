@@ -16,6 +16,7 @@ use FOS\RestBundle\View\View;
 use Lakion\SyliusElasticSearchBundle\Form\Type\FilterSetType;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
+use Sylius\Component\Core\Context\ShopperContextInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,8 +71,16 @@ final class SearchController
 
         $form = $this->formFactory->create(FilterSetType::class, Criteria::fromQueryParameters($this->getResourceClassFromRequest($request), []), ['filter_set' => $this->getFilterScopeFromRequest($request)]);
         $form->handleRequest($request);
+
         $criteria = $form->getData();
-        $criteria = Criteria::fromQueryParameters($this->getResourceClassFromRequest($request), array_merge($request->query->all(), $request->attributes->all(), $criteria->getFiltering()->getFields()));
+        $criteria = Criteria::fromQueryParameters(
+            $this->getResourceClassFromRequest($request),
+            array_merge(
+                $request->query->all(),
+                $request->attributes->all(),
+                $criteria->getFiltering()->getFields()
+            )
+        );
 
         $result = $this->searchEngine->match($criteria);
         $partialResult = $result->getResults($criteria->getPaginating()->getOffset(), $criteria->getPaginating()->getItemsPerPage());

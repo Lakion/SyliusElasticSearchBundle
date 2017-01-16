@@ -13,6 +13,7 @@ namespace Lakion\SyliusElasticSearchBundle\Tests\Behat\Context\Domain\Shop;
 
 use Behat\Behat\Context\Context;
 use FOS\ElasticaBundle\Paginator\PaginatorAdapterInterface;
+use FOS\ElasticaBundle\Paginator\PartialResultsInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
@@ -150,6 +151,17 @@ final class ProductContext implements Context
     }
 
     /**
+     * @When I search for products with name :name
+     */
+    public function iSearchForProductsWithName($name)
+    {
+        sleep(3);
+
+        $criteria = Criteria::fromQueryParameters(Product::class, ['search' => $name]);
+        $this->match($criteria);
+    }
+
+    /**
      * @Then I should see :numberOfProducts products on the list
      */
     public function iShouldSeeProductsOnTheList($numberOfProducts)
@@ -167,23 +179,61 @@ final class ProductContext implements Context
     {
         /** @var PaginatorAdapterInterface $result */
         $searchResult = $this->sharedStorage->get('search_result');
+
+        /** @var PartialResultsInterface $partialResult */
         $partialResult = $searchResult->getResults(0, 100);
 
         /**
          * @var int $position
-         * @var  ProductInterface $result
+         * @var ProductInterface $result
          */
         foreach ($partialResult->toArray() as $position => $result) {
             if ($result->getName() !== $productNames[$position]) {
                 throw new \RuntimeException(
                     sprintf(
                         'Sorting failed at position "%s" expected value was "%s", but got "%s"',
-                        $position+1,
+                        $position + 1,
                         $productNames[$position],
                         $result
                     )
                 );
             }
+        }
+    }
+
+    /**
+     * @Then /^It should be "([^"]+)"$/
+     * @Then /^It should be "([^"]+)", "([^"]+)"$/
+     * @Then /^It should be "([^"]+)", "([^"]+)", "([^"]+)"$/
+     * @Then /^It should be "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)"$/
+     */
+    public function itShouldBe(...$expectedProductNames)
+    {
+        /** @var PaginatorAdapterInterface $result */
+        $searchResult = $this->sharedStorage->get('search_result');
+
+        /** @var PartialResultsInterface $partialResult */
+        $partialResult = $searchResult->getResults(0, 100);
+
+        $resultProductNames = array_map(function (ProductInterface $product) {
+            return $product->getName();
+        }, $partialResult->toArray());
+
+        $expectedProductCount = count($expectedProductNames);
+        $resultProductCount = count($resultProductNames);
+
+        Assert::same($expectedProductCount, $resultProductCount);
+
+        foreach ($expectedProductNames as $expectedProductName) {
+            Assert::oneOf(
+                $expectedProductName,
+                $resultProductNames,
+                sprintf(
+                    'Expected product with name "%s", does not exist in search result. Got "%s"',
+                    $expectedProductName,
+                    implode(',', $resultProductNames)
+                )
+            );
         }
     }
 

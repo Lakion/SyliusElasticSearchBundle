@@ -58,8 +58,8 @@ final class ProductOptionValuesFilterType extends AbstractType
             ->setAllowedTypes('class', 'string')
             ->setRequired('codes')
             ->setAllowedTypes('codes', 'array')
-            ->setRequired('filtering_key')
-            ->setAllowedTypes('filtering_key', 'string')
+            ->setRequired('key')
+            ->setAllowedTypes('key', 'string')
         ;
     }
 }

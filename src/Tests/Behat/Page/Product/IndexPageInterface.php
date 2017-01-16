@@ -34,6 +34,11 @@ interface IndexPageInterface extends SymfonyPageInterface
     public function filter();
 
     /**
+     * @param $phrase
+     */
+    public function search($phrase);
+
+    /**
      * @return NodeElement[]
      */
     public function getAllProducts();

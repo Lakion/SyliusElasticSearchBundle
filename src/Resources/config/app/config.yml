@@ -12,7 +12,8 @@ fos_elastica:
                     mappings:
                         id: { type: integer}
                         code: { type: string }
-                        name: { type: string, index: not_analyzed }
+                        name: { type: string }
+                        raw_name: { type: string, index: not_analyzed, property_path: name }
                         description: { type: string }
                         shortDescription: { type: string }
                         slug: { type: string }

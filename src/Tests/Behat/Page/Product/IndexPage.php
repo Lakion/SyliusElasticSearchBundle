@@ -54,6 +54,15 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
     /**
      * {@inheritdoc}
      */
+    public function search($phrase)
+    {
+        $this->getElement('search')->setValue($phrase);
+        $this->getElement('search_submit')->press();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getAllProducts()
     {
         $productElements = $this->getElement('products')->findAll('css', 'li');
@@ -76,6 +85,8 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
     {
         return array_merge(parent::getDefinedElements(), [
             'filter_option' => '#filter_set_product_options_%filter_type%_%filter_field_name%_%filter_value%',
+            'search' => '#search',
+            'search_submit' => '#search_submit',
             'filter_price_range_grater_than' => '#filter_set_product_price_grater_than',
             'filter_price_range_less_than' => '#filter_set_product_price_less_than',
             'products' => '#products',

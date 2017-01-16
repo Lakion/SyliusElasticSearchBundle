@@ -12,5 +12,6 @@
         <service id="lakion_sylius_elastic_search.query_factory.product_in_price_range" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInPriceRangeQueryFactory" />
         <service id="lakion_sylius_elastic_search.query_factory.product_in_channel" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\ProductInChannelQueryFactory" />
         <service id="lakion_sylius_elastic_search.query_factory.sort_by_field" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Sort\SortByFieldQueryFactory" />
+        <service id="lakion_sylius_elastic_search.query_factory.match_product_name" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\MatchProductNameQueryFactory" />
     </services>
 </container>
