@@ -6,10 +6,10 @@ Feature: Filtering list of products by price range
 
     Background:
         Given the store operates on a single channel in "United States"
-        And the store has a product "Banana t-shirt" priced at "$100"
-        And the store also has a product "Star wars t-shirt" priced at "$150"
-        And the store also has a product "LOTR t-shirt" priced at "$300"
-        And the store also has a product "Breaking bad t-shirt" priced at "$50"
+        And the store has a product "Banana T-Shirt" priced at "$100"
+        And the store also has a product "Star Wars T-Shirt" priced at "$150"
+        And the store also has a product "LOTR T-Shirt" priced at "$300"
+        And the store also has a product "Breaking Bad T-Shirt" priced at "$50"
 
     @domain @ui
     Scenario: Filtering products by price range
