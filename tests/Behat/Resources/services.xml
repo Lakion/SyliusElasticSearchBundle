@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <import resource="services/searching_products.xml" />
+    </imports>
+
+    <services>
+        <service id="lakion_sylius_elastic_search.behat.context.hook.elastic_search" class="Tests\Lakion\SyliusElasticSearchBundle\Behat\Context\Hook\ElasticSearchContext">
+            <argument type="service" id="__symfony__.fos_elastica.resetter" />
+            <tag name="fob.context_service" />
+        </service>
+        <service id="lakion_sylius_elastic_search.behat.suspender.elastic_search" class="Tests\Lakion\SyliusElasticSearchBundle\Behat\Services\ElasticSearchSuspender">
+            <argument type="service" id="__symfony__.fos_elastica.client" />
+        </service>
+    </services>
+</container>

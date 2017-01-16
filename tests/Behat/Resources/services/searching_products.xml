@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="lakion_sylius_elastic_search.behat.context.setup.product" class="Tests\Lakion\SyliusElasticSearchBundle\Behat\Context\Setup\ProductContext">
+            <argument type="service" id="__symfony__.sylius.fixture.book_product" />
+            <argument type="service" id="__symfony__.sylius.fixture.mug_product" />
+            <argument type="service" id="__symfony__.sylius.fixture.sticker_product" />
+            <argument type="service" id="lakion_sylius_elastic_search.behat.suspender.elastic_search" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="lakion_sylius_elastic_search.behat.context.domain.shop.product" class="Tests\Lakion\SyliusElasticSearchBundle\Behat\Context\Domain\Shop\ProductContext">
+            <argument type="service" id="__symfony__.lakion_sylius_elastic_search.search.elastic_engine" />
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="lakion_sylius_elastic_search.behat.context.ui.shop.product" class="Tests\Lakion\SyliusElasticSearchBundle\Behat\Context\Ui\Shop\ProductContext">
+            <argument type="service" id="lakion_sylius_elastic_search.behat.page.shop.product_index" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="lakion_sylius_elastic_search.behat.page.shop.product_index" class="Tests\Lakion\SyliusElasticSearchBundle\Behat\Page\Product\IndexPage" parent="sylius.behat.symfony_page" />
+    </services>
+</container>
