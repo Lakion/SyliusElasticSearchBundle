@@ -26,7 +26,7 @@ final class MatchProductNameQueryFactorySpec extends ObjectBehavior
 
     function it_creates_match_query_with_name_field_by_default()
     {
-        $this->create(['search' => 'banana'])->shouldBeLike(new NestedQuery('translations', new MatchQuery('translations.name', 'banana')));
+        $this->create(['phrase' => 'banana'])->shouldBeLike(new NestedQuery('translations', new MatchQuery('translations.name', 'banana')));
     }
 
     function it_cannot_be_created_without_search_parameter()
@@ -41,11 +41,11 @@ final class MatchProductNameQueryFactorySpec extends ObjectBehavior
 
     function it_cannot_be_created_with_empty_search_parameter()
     {
-        $this->shouldThrow(MissingQueryParameterException::class)->during('create', [['search' => null]]);
+        $this->shouldThrow(MissingQueryParameterException::class)->during('create', [['phrase' => null]]);
     }
 
     function it_cannot_be_created_with_empty_string_search_parameter()
     {
-        $this->shouldThrow(MissingQueryParameterException::class)->during('create', [['search' => '']]);
+        $this->shouldThrow(MissingQueryParameterException::class)->during('create', [['phrase' => '']]);
     }
 }

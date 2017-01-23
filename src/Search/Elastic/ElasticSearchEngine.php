@@ -41,10 +41,13 @@ final class ElasticSearchEngine implements SearchEngineInterface
 
     /**
      * @param SearchCriteriaApplicatorInterface $searchCriteriaApplicator
+     * @param string $criteriaClass
      */
-    public function addSearchCriteriaApplicator(SearchCriteriaApplicatorInterface $searchCriteriaApplicator)
-    {
-        $this->searchCriteriaApplicators[] = $searchCriteriaApplicator;
+    public function addSearchCriteriaApplicator(
+        SearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        $criteriaClass
+    ) {
+        $this->searchCriteriaApplicators[$criteriaClass] = $searchCriteriaApplicator;
     }
 
     /**
@@ -53,9 +56,15 @@ final class ElasticSearchEngine implements SearchEngineInterface
     public function match(Criteria $criteria)
     {
         $search = $this->searchFactory->create();
-        foreach ($this->searchCriteriaApplicators as $applicator) {
-            if ($applicator->supports($criteria)) {
-                $applicator->apply($criteria, $search);
+        $filters = array_merge($criteria->getFiltering()->getFields(), [$criteria->getOrdering()]);
+
+        foreach ($filters as $filter) {
+            if (!is_object($filter)) {
+                continue;
+            }
+
+            if (isset($this->searchCriteriaApplicators[get_class($filter)])) {
+                $this->searchCriteriaApplicators[get_class($filter)]->apply($filter, $search);
             }
         }
 

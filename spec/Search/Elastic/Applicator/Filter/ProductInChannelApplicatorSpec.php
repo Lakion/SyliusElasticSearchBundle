@@ -2,7 +2,7 @@
 
 namespace spec\Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter;
 
-use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInChannelFilter;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductInChannelApplicator;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\SearchCriteriaApplicatorInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\QueryFactoryInterface;
@@ -36,35 +36,10 @@ final class ProductInChannelApplicatorSpec extends ObjectBehavior
         Search $search,
         NestedQuery $nestedQuery
     ) {
-        $criteria = Criteria::fromQueryParameters('product', ['channel_code' => 'web']);
+        $criteria = new ProductInChannelFilter('web');
         $productInChannelQueryFactory->create(['channel_code' => 'web'])->willReturn($nestedQuery);
         $search->addFilter($nestedQuery, BoolQuery::MUST)->shouldBeCalled();
 
         $this->apply($criteria, $search);
-    }
-
-    function it_supports_criteria_with_channel_code()
-    {
-        $criteria = Criteria::fromQueryParameters('product', ['channel_code' => 'web']);
-
-        $this->supports($criteria)->shouldReturn(true);
-    }
-
-    function it_does_not_support_criteria_without_channel_code()
-    {
-        $criteria = Criteria::fromQueryParameters('product', []);
-
-        $this->supports($criteria)->shouldReturn(false);
-    }
-
-    function it_does_not_support_criteria_without_channel_code_value()
-    {
-        $criteria = Criteria::fromQueryParameters('product', ['channel_code' => '']);
-
-        $this->supports($criteria)->shouldReturn(false);
-
-        $criteria = Criteria::fromQueryParameters('product', ['channel_code' => null]);
-
-        $this->supports($criteria)->shouldReturn(false);
     }
 }

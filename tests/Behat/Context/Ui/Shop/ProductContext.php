@@ -44,7 +44,7 @@ final class ProductContext implements Context
     public function iFilterThemByDoubleMugType($mugTypeValue)
     {
         $this->indexPage->open(['per_page' => 100]);
-        $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['mug_type' => $mugTypeValue]]));
+        $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['mug_type' => $mugTypeValue]));
         $this->indexPage->filter();
     }
 
@@ -54,7 +54,7 @@ final class ProductContext implements Context
     public function iFilterThemByDoubleMugTypeAndStickerSize($mugTypeValue, $stickerSizeValue)
     {
         $this->indexPage->open(['per_page' => 100]);
-        $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['mug_type' => $mugTypeValue, 'sticker_size' => $stickerSizeValue]]));
+        $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['mug_type' => $mugTypeValue, 'sticker_size' => $stickerSizeValue]));
         $this->indexPage->filter();
     }
 
@@ -64,7 +64,7 @@ final class ProductContext implements Context
     public function iFilterThemByStickierSize($stickerSizeValue)
     {
         $this->indexPage->open(['per_page' => 100]);
-        $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['product_option_code' => ['sticker_size' => $stickerSizeValue]]));
+        $this->indexPage->filterByProductOptions(Criteria::fromQueryParameters(Product::class, ['sticker_size' => $stickerSizeValue]));
         $this->indexPage->filter();
     }
 

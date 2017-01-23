@@ -3,6 +3,8 @@
 namespace Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter;
 
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInTaxonFilter;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\SearchCriteriaApplicator;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\SearchCriteriaApplicatorInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\QueryFactoryInterface;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
@@ -11,7 +13,7 @@ use ONGR\ElasticsearchDSL\Search;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class ProductInTaxonApplicator implements SearchCriteriaApplicatorInterface
+final class ProductInTaxonApplicator extends SearchCriteriaApplicator
 {
     /**
      * @var QueryFactoryInterface
@@ -38,17 +40,9 @@ final class ProductInTaxonApplicator implements SearchCriteriaApplicatorInterfac
     /**
      * {@inheritdoc}
      */
-    public function apply(Criteria $criteria, Search $search)
+    public function applyProductInTaxonFilter(ProductInTaxonFilter $inTaxonFilter, Search $search)
     {
-        $search->addFilter($this->productInMainTaxonQueryFactory->create($criteria->getFiltering()->getFields()), BoolQuery::SHOULD);
-        $search->addFilter($this->productInProductTaxonsQueryFactory->create($criteria->getFiltering()->getFields()), BoolQuery::SHOULD);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function supports(Criteria $criteria)
-    {
-        return array_key_exists('taxon_code', $criteria->getFiltering()->getFields());
+        $search->addFilter($this->productInMainTaxonQueryFactory->create(['taxon_code' => $inTaxonFilter->getTaxonCode()]), BoolQuery::SHOULD);
+        $search->addFilter($this->productInProductTaxonsQueryFactory->create(['taxon_code' => $inTaxonFilter->getTaxonCode()]), BoolQuery::SHOULD);
     }
 }

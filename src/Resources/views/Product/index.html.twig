@@ -1,13 +1,9 @@
 {{ form_start(form, {'method': 'GET'}) }}
-<input name="search" id="search" type="text" />
+{{ form_row(form.search) }}
 <button type="submit" id="search_submit">{{ 'sylius.ui.search'|trans }}</button>
 {{ form_row(form) }}
 <button type="submit">{{ 'sylius.ui.filter'|trans }}</button>
 
-<input type="hidden" name="sort" value="-name">
-<button type="submit">Sort by name descending</button>
-<input type="hidden" name="sort" value="name">
-<button type="submit">Sort by name ascending</button>
 {{ form_end(form) }}
 
 <ul id="products">

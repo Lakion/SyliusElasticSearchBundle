@@ -16,7 +16,6 @@ use FOS\RestBundle\View\View;
 use Lakion\SyliusElasticSearchBundle\Form\Type\FilterSetType;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
-use Sylius\Component\Core\Context\ShopperContextInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,18 +68,14 @@ final class SearchController
             $view->setTemplate($this->getTemplateFromRequest($request));
         }
 
-        $form = $this->formFactory->create(FilterSetType::class, Criteria::fromQueryParameters($this->getResourceClassFromRequest($request), []), ['filter_set' => $this->getFilterScopeFromRequest($request)]);
+        $form = $this->formFactory->create(
+            FilterSetType::class,
+            Criteria::fromQueryParameters($this->getResourceClassFromRequest($request), ['per_page' => $request->get('per_page')]),
+            ['filter_set' => $this->getFilterSetFromRequest($request)]
+        );
         $form->handleRequest($request);
 
         $criteria = $form->getData();
-        $criteria = Criteria::fromQueryParameters(
-            $this->getResourceClassFromRequest($request),
-            array_merge(
-                $request->query->all(),
-                $request->attributes->all(),
-                $criteria->getFiltering()->getFields()
-            )
-        );
 
         $result = $this->searchEngine->match($criteria);
         $partialResult = $result->getResults($criteria->getPaginating()->getOffset(), $criteria->getPaginating()->getItemsPerPage());
@@ -141,7 +136,7 @@ final class SearchController
      *
      * @return string
      */
-    private function getFilterScopeFromRequest(Request $request)
+    private function getFilterSetFromRequest(Request $request)
     {
         $syliusAttributes = $request->attributes->get('_sylius');
 

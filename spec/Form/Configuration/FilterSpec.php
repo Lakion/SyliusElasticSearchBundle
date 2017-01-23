@@ -38,4 +38,13 @@ final class FilterSpec extends ObjectBehavior
             'code' => 'tshirt_color'
         ]);
     }
+
+    function it_has_default_empty_options()
+    {
+        $this->beConstructedThrough('createFromConfiguration', [
+            'color', ['type' => 'option']
+        ]);
+
+        $this->getOptions()->shouldReturn([]);
+    }
 }
