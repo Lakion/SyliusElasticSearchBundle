@@ -6,6 +6,7 @@
 
     <imports>
         <import resource="services/controller.xml"/>
+        <import resource="services/filter_set_configuration_provider.xml"/>
         <import resource="services/form.xml"/>
         <import resource="services/query_factory.xml" />
         <import resource="services/search_criteria_applicator.xml" />

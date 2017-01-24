@@ -15,7 +15,11 @@ use FOS\RestBundle\View\ConfigurableViewHandlerInterface;
 use FOS\RestBundle\View\View;
 use Lakion\SyliusElasticSearchBundle\Form\Type\FilterSetType;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInChannelFilter;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInTaxonFilter;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
+use Sylius\Component\Core\Context\ShopperContextInterface;
+use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,18 +46,34 @@ final class SearchController
     private $formFactory;
 
     /**
+     * @var TaxonRepositoryInterface
+     */
+    private $taxonRepository;
+
+    /**
+     * @var ShopperContextInterface
+     */
+    private $shopperContext;
+
+    /**
      * @param ConfigurableViewHandlerInterface $restViewHandler
      * @param SearchEngineInterface $searchEngine
      * @param FormFactoryInterface $formFactory
+     * @param TaxonRepositoryInterface $taxonRepository
+     * @param ShopperContextInterface $shopperContext
      */
     public function __construct(
         ConfigurableViewHandlerInterface $restViewHandler,
         SearchEngineInterface $searchEngine,
-        FormFactoryInterface $formFactory
+        FormFactoryInterface $formFactory,
+        TaxonRepositoryInterface $taxonRepository,
+        ShopperContextInterface $shopperContext
     ) {
         $this->restViewHandler = $restViewHandler;
         $this->searchEngine = $searchEngine;
         $this->formFactory = $formFactory;
+        $this->taxonRepository = $taxonRepository;
+        $this->shopperContext = $shopperContext;
     }
 
     /**
@@ -70,12 +90,25 @@ final class SearchController
 
         $form = $this->formFactory->create(
             FilterSetType::class,
-            Criteria::fromQueryParameters($this->getResourceClassFromRequest($request), ['per_page' => $request->get('per_page')]),
+            Criteria::fromQueryParameters(
+                $this->getResourceClassFromRequest($request),
+                ['per_page' => $request->get('per_page')]
+            ),
             ['filter_set' => $this->getFilterSetFromRequest($request)]
         );
         $form->handleRequest($request);
+        $taxon = $this->taxonRepository->findOneBySlug($request->attributes->get('slug'));
 
+        /** @var Criteria $criteria */
         $criteria = $form->getData();
+        $criteria = Criteria::fromQueryParameters(
+            $criteria->getResourceAlias(),
+            array_merge($criteria->getFiltering()->getFields(), [
+                    new ProductInTaxonFilter($taxon->getCode()),
+                    new ProductInChannelFilter($this->shopperContext->getChannel()->getCode())
+                ]
+            )
+        );
 
         $result = $this->searchEngine->match($criteria);
         $partialResult = $result->getResults($criteria->getPaginating()->getOffset(), $criteria->getPaginating()->getItemsPerPage());

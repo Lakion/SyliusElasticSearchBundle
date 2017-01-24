@@ -9,3 +9,15 @@ lakion_elastic_search_shop_product_index:
             filter_set: mug_type_and_stickers_set
     requirements:
         slug: .+
+
+lakion_elastic_search_shop_by_taxon_product_index:
+    path: /taxons/{slug}
+    methods: [GET]
+    defaults:
+        _controller: lakion_sylius_elastic_search.controller.search:filterAction
+        _sylius:
+            template: "@LakionSyliusElasticSearch/Product/index.html.twig"
+            resource_class: Sylius\Component\Core\Model\Product
+            filter_set: mug_type_and_stickers_set
+    requirements:
+        slug: .+

@@ -12,7 +12,7 @@
 
         <service id="lakion_sylius_elastic_search.form_type.filter_scope_type" class="Lakion\SyliusElasticSearchBundle\Form\Type\FilterSetType">
             <argument type="service" id="lakion_sylius_elastic_search.form_registry.filters"/>
-            <argument>%lakion_sylius_elastic_search.filter_sets%</argument>
+            <argument type="service" id="lakion_sylius_elastic_search.filter_set_configuration_provider.composite" />
             <tag name="form.type" />
         </service>
 

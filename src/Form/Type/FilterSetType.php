@@ -12,6 +12,7 @@
 namespace Lakion\SyliusElasticSearchBundle\Form\Type;
 
 use Lakion\SyliusElasticSearchBundle\Form\Configuration\FilterSet;
+use Lakion\SyliusElasticSearchBundle\Form\Configuration\Provider\FilterSetProviderInterface;
 use Lakion\SyliusElasticSearchBundle\Form\DataMapper\CriteriaDataMapper;
 use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use Symfony\Component\Form\AbstractType;
@@ -31,21 +32,20 @@ final class FilterSetType extends AbstractType
     private $filterTypeRegistry;
 
     /**
-     * @var FilterSet[]
+     * @var FilterSetProviderInterface
      */
-    private $filterSets;
+    private $filterSetConfigurationProvider;
 
     /**
      * @param FormTypeRegistryInterface $filterTypeRegistry
-     * @param FilterSet[] $filterSets
+     * @param FilterSetProviderInterface $filterSetConfigurationProvider
      */
-    public function __construct(FormTypeRegistryInterface $filterTypeRegistry, array $filterSets)
-    {
+    public function __construct(
+        FormTypeRegistryInterface $filterTypeRegistry,
+        FilterSetProviderInterface $filterSetConfigurationProvider
+    ) {
         $this->filterTypeRegistry = $filterTypeRegistry;
-
-        foreach ($filterSets as $filterSetName => $filterSetConfiguration) {
-            $this->filterSets[$filterSetName] = FilterSet::createFromConfiguration($filterSetName, $filterSetConfiguration);
-        }
+        $this->filterSetConfigurationProvider = $filterSetConfigurationProvider;
     }
 
     /**
@@ -53,7 +53,8 @@ final class FilterSetType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->filterSets[$options['filter_set']]->getFilters() as $filter) {
+        $filters = $this->filterSetConfigurationProvider->getFilterSetConfiguration($options['filter_set'])->getFilters();
+        foreach ($filters as $filter) {
             $builder->add(
                 $filter->getName(),
                 $this->filterTypeRegistry->get('default', $filter->getType()),
