@@ -1,7 +1,7 @@
 Sylius ElasticSearchBundle
 ==========================
-[![Build status on Linux](https://img.shields.io/travis/Lakion/SyliusElasticSearchBundle/master.svg)](http://travis-ci.org/Lakion/SyliusELasticSearchBundle)
 Elastic search for Sylius.
+[![Build status on Linux](https://img.shields.io/travis/Lakion/SyliusElasticSearchBundle/master.svg)](http://travis-ci.org/Lakion/SyliusELasticSearchBundle)
 
 ## Usage
 
@@ -22,46 +22,52 @@ Elastic search for Sylius.
     $ elasticsearch
     ```
 
-4. Populate your elastic search server with command or your custom code:
+4. Add this bundle to `AppKernel.php`:
+
+    ```php
+    new \FOS\ElasticaBundle\FOSElasticaBundle(),
+    new \Lakion\SyliusElasticSearchBundle\LakionSyliusElasticSearchBundle(),
+    ```
+
+5. Create/Setup database:
+
+    ```bash
+    $ app/console do:da:cr
+    $ app/console do:sch:cr
+    $ app/console syl:fix:lo
+    ```
+
+6. Populate your elastic search server with command or your custom code:
 
     ```bash
     $ app/console fos:elastic:pop
     ```
 
-5. Add this bundle to `AppKernel.php`:
-
-    ```php
-    new \Lakion\SyliusElasticSearchBundle\LakionSyliusElasticSearchBundle(),
-    ```
-
-6. Import config file in `app/config/config.yml`:
+7. Import config file in `app/config/config.yml` for default filter set configuration:
 
     ```yaml
     imports:
        - { resource: "@LakionSyliusElasticSearchBundle/Resources/config/app/config.yml" }
     ```
 
-7. Import routing files in `app/config/routing.yml`:
+8. Import routing files in `app/config/routing.yml`:
 
     ```yaml
     sylius_search:
         resource: "@LakionSyliusElasticSearchBundle/Resources/config/routing.yml"
     ```
 
-8. Configure:
+8. Configuration reference:
 
     ```yaml
     lakion_sylius_elastic_search:
         filter_sets:
-            mug_type_and_stickers_set:
+            mugs:
                 filters:
                     product_options:
-                        type: options
+                        type: option
                         options:
-                            codes: [mug_type, sticker_size]
-                            filtering_key: product_option_code
+                            code: mug_type
                     product_price:
                         type: price
-                        options:
-                            filtering_key: product_price_range
     ```
