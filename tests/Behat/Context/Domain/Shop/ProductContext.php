@@ -15,6 +15,11 @@ use Behat\Behat\Context\Context;
 use FOS\ElasticaBundle\Paginator\PaginatorAdapterInterface;
 use FOS\ElasticaBundle\Paginator\PartialResultsInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductHasOptionCodesFilter;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInChannelFilter;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInPriceRangeFilter;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInTaxonFilter;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\SearchPhrase;
 use Lakion\SyliusElasticSearchBundle\Search\SearchEngineInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -54,7 +59,7 @@ final class ProductContext implements Context
     public function iFilterThemByDoubleMugType($mugTypeValue)
     {
         $criteria = Criteria::fromQueryParameters(Product::class, [
-            'product_option_code' => sprintf('mug_type_%s', $mugTypeValue),
+            new ProductHasOptionCodesFilter([sprintf('mug_type_%s', $mugTypeValue)]),
         ]);
 
         $this->match($criteria);
@@ -66,7 +71,8 @@ final class ProductContext implements Context
     public function iFilterThemByDoubleMugTypeAndStickerSize($mugTypeValue, $stickerSizeValue)
     {
         $criteria = Criteria::fromQueryParameters(Product::class, [
-            'product_option_code' => sprintf('mug_type_%s+sticker_size_%s', $mugTypeValue, $stickerSizeValue),
+            new ProductHasOptionCodesFilter([sprintf('mug_type_%s', $mugTypeValue)]),
+            new ProductHasOptionCodesFilter([sprintf('sticker_size_%s', $stickerSizeValue)]),
         ]);
 
         $this->match($criteria);
@@ -78,7 +84,7 @@ final class ProductContext implements Context
     public function iFilterThemByStickierSize($stickerSizeValue)
     {
         $criteria = Criteria::fromQueryParameters(Product::class, [
-            'product_option_code' => sprintf('sticker_size_%s', $stickerSizeValue),
+            new ProductHasOptionCodesFilter([sprintf('sticker_size_%s', $stickerSizeValue)]),
         ]);
 
         $this->match($criteria);
@@ -90,7 +96,7 @@ final class ProductContext implements Context
     public function iFilterThemByPriceBetweenAnd($graterThan, $lessThan)
     {
         sleep(3);
-        $criteria = Criteria::fromQueryParameters(Product::class, ['product_price_range' => ['grater_than'=> $graterThan, 'less_than' => $lessThan]]);
+        $criteria = Criteria::fromQueryParameters(Product::class, [new ProductInPriceRangeFilter($graterThan, $lessThan)]);
         $this->match($criteria);
     }
 
@@ -109,7 +115,7 @@ final class ProductContext implements Context
     public function iFilterThemByChannel(ChannelInterface $channel)
     {
         sleep(3);
-        $criteria = Criteria::fromQueryParameters(Product::class, ['channel_code' => $channel->getCode()]);
+        $criteria = Criteria::fromQueryParameters(Product::class, [new ProductInChannelFilter($channel->getCode())]);
         $this->match($criteria);
     }
 
@@ -120,8 +126,8 @@ final class ProductContext implements Context
     {
         sleep(3);
         $criteria = Criteria::fromQueryParameters(Product::class, [
-            'channel_code' => $channel->getCode(),
-            'product_price_range' => ['grater_than'=> $graterThan, 'less_than' => $lessThan],
+            new ProductInChannelFilter($channel->getCode()),
+            new ProductInPriceRangeFilter($graterThan, $lessThan),
         ]);
 
         $this->match($criteria);
@@ -132,7 +138,7 @@ final class ProductContext implements Context
      */
     public function iFilterThemByTaxon(TaxonInterface $taxon)
     {
-        $criteria = Criteria::fromQueryParameters(Product::class, ['taxon_code' => $taxon->getCode()]);
+        $criteria = Criteria::fromQueryParameters(Product::class, [new ProductInTaxonFilter($taxon->getCode())]);
         $this->match($criteria);
     }
 
@@ -157,7 +163,7 @@ final class ProductContext implements Context
     {
         sleep(3);
 
-        $criteria = Criteria::fromQueryParameters(Product::class, ['search' => $name]);
+        $criteria = Criteria::fromQueryParameters(Product::class, [new SearchPhrase($name)]);
         $this->match($criteria);
     }
 

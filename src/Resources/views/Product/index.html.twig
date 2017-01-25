@@ -1,17 +1,36 @@
-{{ form_start(form, {'method': 'GET'}) }}
-<input name="search" id="search" type="text" />
-<button type="submit" id="search_submit">{{ 'sylius.ui.search'|trans }}</button>
-{{ form_row(form) }}
-<button type="submit">{{ 'sylius.ui.filter'|trans }}</button>
+{% extends '@SyliusShop/layout.html.twig' %}
 
-<input type="hidden" name="sort" value="-name">
-<button type="submit">Sort by name descending</button>
-<input type="hidden" name="sort" value="name">
-<button type="submit">Sort by name ascending</button>
-{{ form_end(form) }}
+{% import '@SyliusUi/Macro/messages.html.twig' as messages %}
 
-<ul id="products">
-{% for product in resources %}
-    <li>{{ product.name }}</li>
-{% endfor %}
-</ul>
+{% block content %}
+    <div class="ui stackable grid">
+        <div class="four wide column">
+            {{ form_start(form, {'method': 'GET'}) }}
+            <select name="per_page" id="pagination">
+                <option value="10">10</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            {{ form_row(form.search) }}
+            <button type="submit" id="search_submit">{{ 'sylius.ui.search'|trans }}</button>
+            {{ form_row(form) }}
+            <button type="submit">{{ 'sylius.ui.filter'|trans }}</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="twelve wide column">
+
+            {% if products|length > 0 %}
+                <div class="ui three column stackable grid" id="products">
+                    {% for product in products %}
+                        <div class="column">
+                            {% include '@SyliusShop/Product/_box.html.twig' %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="ui hidden divider"></div>
+            {% else %}
+                {{ messages.info('sylius.ui.no_results_to_display') }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

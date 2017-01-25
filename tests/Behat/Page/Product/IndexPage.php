@@ -24,12 +24,9 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
      */
     public function filterByProductOptions(Criteria $criteria)
     {
-        $filterFiledName = key($criteria->getFiltering()->getFields());
-
-        foreach ($criteria->getFiltering()->getFields()[$filterFiledName] as $type => $value) {
+        foreach ($criteria->getFiltering()->getFields() as $type => $value) {
             $filterType = $this->getElement('filter_option', [
                 '%filter_type%' => $type,
-                '%filter_field_name%' => $filterFiledName,
                 '%filter_value%' => sprintf('%s_%s', $type, $value)
             ]);
 
@@ -54,6 +51,14 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
     /**
      * {@inheritdoc}
      */
+    public function setPaginating($perPage)
+    {
+        $this->getElement('pagination')->selectOption($perPage);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function search($phrase)
     {
         $this->getElement('search')->setValue($phrase);
@@ -65,7 +70,7 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
      */
     public function getAllProducts()
     {
-        $productElements = $this->getElement('products')->findAll('css', 'li');
+        $productElements = $this->getElement('products')->findAll('css', 'div .column > div .content > a');
 
         return $productElements;
     }
@@ -84,12 +89,13 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
     protected function getDefinedElements()
     {
         return array_merge(parent::getDefinedElements(), [
-            'filter_option' => '#filter_set_product_options_%filter_type%_%filter_field_name%_%filter_value%',
-            'search' => '#search',
+            'filter_option' => '#filter_set_%filter_type%_code_%filter_value%',
+            'search' => '#filter_set_search',
             'search_submit' => '#search_submit',
             'filter_price_range_grater_than' => '#filter_set_product_price_grater_than',
             'filter_price_range_less_than' => '#filter_set_product_price_less_than',
             'products' => '#products',
+            'pagination' => '#pagination',
         ]);
     }
 }

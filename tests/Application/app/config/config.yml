@@ -45,12 +45,35 @@ lakion_sylius_elastic_search:
     filter_sets:
         mug_type_and_stickers_set:
             filters:
-                product_options:
-                    type: options
+                mug_type:
+                    type: option
                     options:
-                        codes: [mug_type, sticker_size]
-                        key: product_option_code
+                        option_code: mug_type
+                sticker_size:
+                    type: option
+                    options:
+                        option_code: sticker_size
                 product_price:
                     type: price
+                search:
+                    type: search
+        mugs:
+            filters:
+                mug_type:
+                    type: option
                     options:
-                        key: product_price_range
+                        option_code: mug_type
+                product_price:
+                        type: price
+                search:
+                    type: search
+        default:
+            filters:
+                price_range:
+                    type: price
+                search:
+                    type: search
+        global_search:
+            filters:
+                search:
+                    type: search

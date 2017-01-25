@@ -15,12 +15,12 @@ Feature: Sorting list of products by name
         And the store also has a product "Westworld T-Shirt" priced at "$1000" in "Europe" channel
         And the store also has a product "Orange T-Shirt" priced at "$1000" in "Europe" channel
 
-    @domain @ui
+    @domain
     Scenario: Sorting products by name in ascending order
         When I sort them by name in ascending order
         Then I should see products in order like "Banana T-Shirt", "Breaking Bad T-Shirt", "LOTR T-Shirt", "Orange T-Shirt", "Star Wars T-Shirt", "Westworld T-Shirt"
 
-    @domain @ui
+    @domain
     Scenario: Sorting products by name in descending order
         When I sort them by name in descending order
         Then I should see products in order like "Westworld T-Shirt", "Star Wars T-Shirt", "Orange T-Shirt", "LOTR T-Shirt", "Breaking Bad T-Shirt", "Banana T-Shirt"

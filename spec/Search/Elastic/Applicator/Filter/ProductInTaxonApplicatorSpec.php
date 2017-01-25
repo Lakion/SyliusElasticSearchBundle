@@ -3,6 +3,7 @@
 namespace spec\Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter;
 
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInTaxonFilter;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductInTaxonApplicator;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\SearchCriteriaApplicatorInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\QueryFactoryInterface;
@@ -39,7 +40,7 @@ final class ProductInTaxonApplicatorSpec extends ObjectBehavior
         TermQuery $termQuery,
         Search $search
     ) {
-        $criteria = Criteria::fromQueryParameters('product', ['taxon_code' => 'mugs']);
+        $criteria = new ProductInTaxonFilter('mugs');
 
         $productInMainTaxon->create(['taxon_code' => 'mugs'])->willReturn($termQuery);
         $productInProductTaxons->create(['taxon_code' => 'mugs'])->willReturn($nestedQuery);
@@ -48,19 +49,5 @@ final class ProductInTaxonApplicatorSpec extends ObjectBehavior
         $search->addFilter($nestedQuery, BoolQuery::SHOULD)->shouldBeCalled();
 
         $this->apply($criteria, $search);
-    }
-
-    function it_does_not_support_criteria_if_they_do_not_have_taxon_code()
-    {
-        $criteria = Criteria::fromQueryParameters('product', []);
-
-        $this->supports($criteria)->shouldReturn(false);
-    }
-
-    function it_supports_criteria_if_they_have_taxon_code()
-    {
-        $criteria = Criteria::fromQueryParameters('product', ['taxon_code' => 'mugs']);
-
-        $this->supports($criteria)->shouldReturn(true);
     }
 }

@@ -3,9 +3,11 @@
 namespace spec\Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Query;
 
 use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\SearchPhrase;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Query\MatchProductByNameApplicator;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\SearchCriteriaApplicatorInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\QueryFactoryInterface;
+use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchDSL\Query\MatchQuery;
 use ONGR\ElasticsearchDSL\Search;
 use PhpSpec\ObjectBehavior;
@@ -15,9 +17,9 @@ use PhpSpec\ObjectBehavior;
  */
 final class MatchProductByNameApplicatorSpec extends ObjectBehavior
 {
-    function let(QueryFactoryInterface $matchProductNameQueryFactory)
+    function let(QueryFactoryInterface $matchProductNameQueryFactory, QueryFactoryInterface $emptyQueryFactory)
     {
-        $this->beConstructedWith($matchProductNameQueryFactory);
+        $this->beConstructedWith($matchProductNameQueryFactory, $emptyQueryFactory);
     }
 
     function it_is_initializable()
@@ -35,17 +37,22 @@ final class MatchProductByNameApplicatorSpec extends ObjectBehavior
         MatchQuery $matchQuery,
         Search $search
     ) {
-        $criteria = Criteria::fromQueryParameters('product', ['search' => 'banana']);
-        $matchProductNameQueryFactory->create(['search' => 'banana'])->willReturn($matchQuery);
+        $criteria = new SearchPhrase('banana');
+        $matchProductNameQueryFactory->create(['phrase' => 'banana'])->willReturn($matchQuery);
         $search->addQuery($matchQuery)->shouldBeCalled();
 
         $this->apply($criteria, $search);
     }
 
-    function it_supports_criteria_with_search_parameter()
-    {
-        $criteria = Criteria::fromQueryParameters('product', ['search' => 'banana']);
+    function it_applies_match_all_for_empty_search_phrase(
+        QueryFactoryInterface $emptyQueryFactory,
+        MatchAllQuery $matchAllQuery,
+        Search $search
+    ) {
+        $criteria = new SearchPhrase('');
+        $emptyQueryFactory->create()->willReturn($matchAllQuery);
+        $search->addQuery($matchAllQuery)->shouldBeCalled();
 
-        $this->supports($criteria)->shouldReturn(true);
+        $this->apply($criteria, $search);
     }
 }

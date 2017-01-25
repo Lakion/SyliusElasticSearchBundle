@@ -36,7 +36,7 @@ final class Filter
      * @param string $type
      * @param array $options
      */
-    private function __construct($name, $type, array $options)
+    private function __construct($name, $type, array $options = [])
     {
         $this->name = $name;
         $this->type = $type;
@@ -44,6 +44,7 @@ final class Filter
     }
 
     /**
+     * @param string $name
      * @param array $configuration
      *
      * @return Filter
@@ -53,7 +54,7 @@ final class Filter
         return new self(
             $name,
             $configuration['type'],
-            $configuration['options']
+            isset($configuration['options']) ? $configuration['options'] : []
         );
     }
 

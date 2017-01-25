@@ -30,8 +30,12 @@ final class RegisterSearchCriteriaApplicatorPass implements CompilerPassInterfac
         }
 
         foreach ($container->findTaggedServiceIds('search_criteria_applicator') as $taggedServiceId => $taggedServiceConfig) {
+            if (!isset($taggedServiceConfig[0]['applies'])) {
+                throw new \InvalidArgumentException(sprintf('Applicator "%s" does not have applies attribute', $taggedServiceId));
+            }
+
             $engineDefinition = $container->getDefinition('lakion_sylius_elastic_search.search.elastic_engine');
-            $engineDefinition->addMethodCall('addSearchCriteriaApplicator', [new Reference($taggedServiceId)]);
+            $engineDefinition->addMethodCall('addSearchCriteriaApplicator', [new Reference($taggedServiceId), $taggedServiceConfig[0]['applies']]);
         }
     }
 }

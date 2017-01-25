@@ -20,15 +20,8 @@ use ONGR\ElasticsearchDSL\Search;
 interface SearchCriteriaApplicatorInterface
 {
     /**
-     * @param Criteria $criteria
+     * @param mixed $criteria
      * @param Search $search
      */
-    public function apply(Criteria $criteria, Search $search);
-
-    /**
-     * @param Criteria $criteria
-     *
-     * @return bool
-     */
-    public function supports(Criteria $criteria);
+    public function apply($criteria, Search $search);
 }

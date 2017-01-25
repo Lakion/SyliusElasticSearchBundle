@@ -7,32 +7,29 @@
     <services>
         <service id="lakion_sylius_elastic_search.search_criteria_applicator.product_has_multiple_option_codes" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductHasMultipleOptionCodesApplicator">
             <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_has_option_code" />
-            <tag name="search_criteria_applicator" />
-        </service>
-        <service id="lakion_sylius_elastic_search.search_criteria_applicator.empty_criteria" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Query\EmptyCriteriaApplicator">
-            <argument type="service" id="lakion_sylius_elastic_search.query_factory.empty_criteria" />
-            <tag name="search_criteria_applicator" />
+            <tag name="search_criteria_applicator" applies="Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductHasOptionCodesFilter" />
         </service>
         <service id="lakion_sylius_elastic_search.search_criteria_applicator.product_in_taxon" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductInTaxonApplicator">
             <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_in_main_taxon" />
             <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_in_product_taxons" />
-            <tag name="search_criteria_applicator" />
+            <tag name="search_criteria_applicator" applies="Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInTaxonFilter" />
         </service>
         <service id="lakion_sylius_elastic_search.search_criteria_applicator.product_in_price_range" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductInPriceRangeApplicator">
             <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_in_price_range" />
-            <tag name="search_criteria_applicator" />
+            <tag name="search_criteria_applicator" applies="Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInPriceRangeFilter" />
         </service>
         <service id="lakion_sylius_elastic_search.search_criteria_applicator.product_in_channel" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductInChannelApplicator">
             <argument type="service" id="lakion_sylius_elastic_search.query_factory.product_in_channel" />
-            <tag name="search_criteria_applicator" />
+            <tag name="search_criteria_applicator" applies="Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInChannelFilter" />
         </service>
         <service id="lakion_sylius_elastic_search.search_criteria_applicator.sort_by_field" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Sort\SortByFieldApplicator">
             <argument type="service" id="lakion_sylius_elastic_search.query_factory.sort_by_field" />
-            <tag name="search_criteria_applicator" />
+            <tag name="search_criteria_applicator" applies="Lakion\SyliusElasticSearchBundle\Search\Criteria\Ordering" />
         </service>
         <service id="lakion_sylius_elastic_search.search_criteria_applicator.match_product_by_name" class="Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Query\MatchProductByNameApplicator">
             <argument type="service" id="lakion_sylius_elastic_search.query_factory.match_product_name" />
-            <tag name="search_criteria_applicator" />
+            <argument type="service" id="lakion_sylius_elastic_search.query_factory.empty_criteria" />
+            <tag name="search_criteria_applicator" applies="Lakion\SyliusElasticSearchBundle\Search\Criteria\SearchPhrase" />
         </service>
     </services>
 </container>

@@ -34,6 +34,11 @@ interface IndexPageInterface extends SymfonyPageInterface
     public function filter();
 
     /**
+     * @param int $perPage
+     */
+    public function setPaginating($perPage);
+
+    /**
      * @param $phrase
      */
     public function search($phrase);

@@ -2,8 +2,8 @@
 
 namespace Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter;
 
-use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
-use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\SearchCriteriaApplicatorInterface;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductHasOptionCodesFilter;
+use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\SearchCriteriaApplicator;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\QueryFactoryInterface;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use ONGR\ElasticsearchDSL\Search;
@@ -11,7 +11,7 @@ use ONGR\ElasticsearchDSL\Search;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class ProductHasMultipleOptionCodesApplicator implements SearchCriteriaApplicatorInterface
+final class ProductHasMultipleOptionCodesApplicator extends SearchCriteriaApplicator
 {
     /**
      * @var QueryFactoryInterface
@@ -27,27 +27,16 @@ final class ProductHasMultipleOptionCodesApplicator implements SearchCriteriaApp
     }
 
     /**
-     * {@inheritdoc}
+     * @param ProductHasOptionCodesFilter $codesFilter
+     * @param Search $search
      */
-    public function apply(Criteria $criteria, Search $search)
+    public function applyProductHasOptionCodesFilter(ProductHasOptionCodesFilter $codesFilter, Search $search)
     {
-        $productOptionCodes = explode('+', $criteria->getFiltering()->getFields()['product_option_code']);
-
-        foreach ($productOptionCodes as $productOptionCode) {
+        foreach ($codesFilter->getCodes() as $code) {
             $search->addFilter(
-                $this->productHasOptionCodeQueryFactory->create(['option_value_code' => $productOptionCode]),
+                $this->productHasOptionCodeQueryFactory->create(['option_value_code' => $code]),
                 BoolQuery::SHOULD
             );
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function supports(Criteria $criteria)
-    {
-        $fields = $criteria->getFiltering()->getFields();
-
-        return array_key_exists('product_option_code', $criteria->getFiltering()->getFields()) && '' !== $fields['product_option_code'];
     }
 }

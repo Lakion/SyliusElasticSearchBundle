@@ -1,0 +1,36 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% import '@SyliusUi/Macro/messages.html.twig' as messages %}
+
+{% block content %}
+    {% include '@SyliusShop/Product/Index/_header.html.twig' %}
+    <div class="ui stackable grid">
+        <div class="four wide column">
+            {% include '@SyliusShop/Product/Index/_sidebar.html.twig' %}
+            {{ form_start(form, {'method' : 'GET'}) }}
+            <select name="per_page" id="pagination">
+                <option value="10">10</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            {{ form_rest(form) }}
+                <button type="submit">{{ 'sylius.ui.filter'|trans }}</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="twelve wide column">
+
+            {% if products|length > 0 %}
+                <div class="ui three column stackable grid" id="products">
+                    {% for product in products %}
+                        <div class="column">
+                            {% include '@SyliusShop/Product/_box.html.twig' %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="ui hidden divider"></div>
+            {% else %}
+                {{ messages.info('sylius.ui.no_results_to_display') }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

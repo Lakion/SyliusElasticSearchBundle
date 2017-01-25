@@ -30,7 +30,7 @@ final class FilterSet
      * @param string $name
      * @param Filter[] $filters
      */
-    private function __construct($name, array $filters)
+    private function __construct($name, array $filters = [])
     {
         $this->name = $name;
         $this->filters = $filters;

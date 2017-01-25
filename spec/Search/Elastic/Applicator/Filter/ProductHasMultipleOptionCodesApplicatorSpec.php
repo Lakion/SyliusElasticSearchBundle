@@ -2,7 +2,7 @@
 
 namespace spec\Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter;
 
-use Lakion\SyliusElasticSearchBundle\Search\Criteria\Criteria;
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductHasOptionCodesFilter;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\Filter\ProductHasMultipleOptionCodesApplicator;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Applicator\SearchCriteriaApplicatorInterface;
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\QueryFactoryInterface;
@@ -37,7 +37,7 @@ final class ProductHasMultipleOptionCodesApplicatorSpec extends ObjectBehavior
         TermQuery $stickerSizeTermQuery,
         Search $search
     ) {
-        $criteria = Criteria::fromQueryParameters('product', ['product_option_code' => 'medium_mug+sticker_size_1']);
+        $criteria = new ProductHasOptionCodesFilter(['medium_mug', 'sticker_size_1']);
         $productHasOptionCodeQueryFactory->create(['option_value_code' => 'medium_mug'])->willReturn($mediumMugTermQuery);
         $productHasOptionCodeQueryFactory->create(['option_value_code' => 'sticker_size_1'])->willReturn($stickerSizeTermQuery);
 
@@ -52,32 +52,11 @@ final class ProductHasMultipleOptionCodesApplicatorSpec extends ObjectBehavior
         TermQuery $mediumMugTermQuery,
         Search $search
     ) {
-        $criteria = Criteria::fromQueryParameters('product', ['product_option_code' => 'medium_mug']);
+        $criteria = new ProductHasOptionCodesFilter(['medium_mug']);
         $productHasOptionCodeQueryFactory->create(['option_value_code' => 'medium_mug'])->willReturn($mediumMugTermQuery);
 
         $search->addFilter($mediumMugTermQuery, BoolQuery::SHOULD)->shouldBeCalled();
 
         $this->apply($criteria, $search);
-    }
-
-    function it_supports_given_criteria()
-    {
-        $criteria = Criteria::fromQueryParameters('product', ['product_option_code' => 'medium_mug']);
-
-        $this->supports($criteria)->shouldReturn(true);
-    }
-
-    function it_does_not_support_criteria_without_product_option_code_parameter()
-    {
-        $criteria = Criteria::fromQueryParameters('product', ['product_option_value' => 'Medium']);
-
-        $this->supports($criteria)->shouldReturn(false);
-    }
-
-    function it_does_not_support_criteria_without_filtering_parameters()
-    {
-        $criteria = Criteria::fromQueryParameters('product', []);
-
-        $this->supports($criteria)->shouldReturn(false);
     }
 }

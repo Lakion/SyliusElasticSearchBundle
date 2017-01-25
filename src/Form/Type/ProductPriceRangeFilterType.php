@@ -11,15 +11,18 @@
 
 namespace Lakion\SyliusElasticSearchBundle\Form\Type;
 
+use Lakion\SyliusElasticSearchBundle\Search\Criteria\Filtering\ProductInPriceRangeFilter;
 use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class ProductPriceRangeFilterType extends AbstractType
+final class ProductPriceRangeFilterType extends AbstractType implements DataTransformerInterface
 {
     /**
      * {@inheritdoc}
@@ -29,17 +32,31 @@ final class ProductPriceRangeFilterType extends AbstractType
         $builder
             ->add('grater_than', MoneyType::class)
             ->add('less_than', MoneyType::class)
+            ->addModelTransformer($this)
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function transform($value)
     {
-        $resolver
-            ->setRequired('key')
-            ->setAllowedTypes('key', 'string')
-        ;
+        if (null === $value) {
+            return null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reverseTransform($value)
+    {
+        if (null === $value['grater_than'] || null === $value['less_than']) {
+            return null;
+        }
+
+        return new ProductInPriceRangeFilter($value['grater_than'], $value['less_than']);
     }
 }
