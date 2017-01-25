@@ -51,6 +51,14 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
     /**
      * {@inheritdoc}
      */
+    public function setPaginating($perPage)
+    {
+        $this->getElement('pagination')->selectOption($perPage);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function search($phrase)
     {
         $this->getElement('search')->setValue($phrase);
@@ -62,7 +70,7 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
      */
     public function getAllProducts()
     {
-        $productElements = $this->getElement('products')->findAll('css', 'li');
+        $productElements = $this->getElement('products')->findAll('css', 'div .column > div .content > a');
 
         return $productElements;
     }
@@ -87,6 +95,7 @@ final class IndexPage extends SymfonyPage implements IndexPageInterface
             'filter_price_range_grater_than' => '#filter_set_product_price_grater_than',
             'filter_price_range_less_than' => '#filter_set_product_price_less_than',
             'products' => '#products',
+            'pagination' => '#pagination',
         ]);
     }
 }

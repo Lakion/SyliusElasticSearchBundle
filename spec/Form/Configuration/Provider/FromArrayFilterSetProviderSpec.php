@@ -5,13 +5,13 @@ namespace spec\Lakion\SyliusElasticSearchBundle\Form\Configuration\Provider;
 use Lakion\SyliusElasticSearchBundle\Exception\FilterSetConfigurationNotFoundException;
 use Lakion\SyliusElasticSearchBundle\Form\Configuration\FilterSet;
 use Lakion\SyliusElasticSearchBundle\Form\Configuration\Provider\FilterSetProviderInterface;
-use Lakion\SyliusElasticSearchBundle\Form\Configuration\Provider\FromConfigurationFilterSetProvider;
+use Lakion\SyliusElasticSearchBundle\Form\Configuration\Provider\FromArrayFilterSetProvider;
 use PhpSpec\ObjectBehavior;
 
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class FromConfigurationFilterSetProviderSpec extends ObjectBehavior
+final class FromArrayFilterSetProviderSpec extends ObjectBehavior
 {
     function let()
     {
@@ -22,7 +22,7 @@ final class FromConfigurationFilterSetProviderSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(FromConfigurationFilterSetProvider::class);
+        $this->shouldHaveType(FromArrayFilterSetProvider::class);
     }
 
     function it_is_filter_set_configuration_provider()

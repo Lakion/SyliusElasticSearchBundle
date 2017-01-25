@@ -26,7 +26,9 @@ abstract class SearchCriteriaApplicator implements SearchCriteriaApplicatorInter
         $method = $this->getApplyMethod($criteria);
 
         if (!method_exists($this, $method)) {
-            throw new \RuntimeException();
+            throw new \RuntimeException(
+                sprintf('Method "%s" does not exist for "%s".', $method, get_class($criteria))
+            );
         }
 
         $this->$method($criteria, $search);
@@ -40,7 +42,7 @@ abstract class SearchCriteriaApplicator implements SearchCriteriaApplicatorInter
     private function getApplyMethod($criteria)
     {
         if (!is_object($criteria)) {
-            throw new \RuntimeException();
+            throw new \RuntimeException(sprintf('It should be query object, got "%s"', gettype($criteria)));
         }
 
         $classParts = explode('\\', get_class($criteria));

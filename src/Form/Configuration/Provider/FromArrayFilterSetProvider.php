@@ -17,7 +17,7 @@ use Lakion\SyliusElasticSearchBundle\Form\Configuration\FilterSet;
 /**
  * @author Arkadiusz Krakowiak <arkadiusz.krakowiak@lakion.com>
  */
-final class FromConfigurationFilterSetProvider implements FilterSetProviderInterface
+final class FromArrayFilterSetProvider implements FilterSetProviderInterface
 {
     /**
      * @var FilterSet[]

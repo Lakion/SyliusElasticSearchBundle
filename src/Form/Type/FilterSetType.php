@@ -11,14 +11,12 @@
 
 namespace Lakion\SyliusElasticSearchBundle\Form\Type;
 
-use Lakion\SyliusElasticSearchBundle\Form\Configuration\FilterSet;
+use Lakion\SyliusElasticSearchBundle\Exception\FilterSetConfigurationNotFoundException;
 use Lakion\SyliusElasticSearchBundle\Form\Configuration\Provider\FilterSetProviderInterface;
 use Lakion\SyliusElasticSearchBundle\Form\DataMapper\CriteriaDataMapper;
 use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -53,7 +51,12 @@ final class FilterSetType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $filters = $this->filterSetConfigurationProvider->getFilterSetConfiguration($options['filter_set'])->getFilters();
+        try {
+            $filters = $this->filterSetConfigurationProvider->getFilterSetConfiguration($options['filter_set'])->getFilters();
+        } catch (FilterSetConfigurationNotFoundException $configurationNotFoundException) {
+            $filters = $this->filterSetConfigurationProvider->getFilterSetConfiguration('default')->getFilters();
+        }
+
         foreach ($filters as $filter) {
             $builder->add(
                 $filter->getName(),

@@ -32,7 +32,8 @@ final class CriteriaDataMapper implements DataMapperInterface
     public function mapFormsToData($forms, &$data)
     {
         $forms = iterator_to_array($forms);
-        $filtering = [];
+        $filtering = $data instanceof Criteria ? ['per_page' => $data->getPaginating()->getItemsPerPage()] : [];
+
         foreach ($forms as $form) {
             if (null !== $form->getData()) {
                 $filtering[] = $form->getData();
@@ -41,7 +42,10 @@ final class CriteriaDataMapper implements DataMapperInterface
 
         $data = Criteria::fromQueryParameters(
             $data->getResourceAlias(),
-            array_merge($filtering, ['per_page' => $data->getPaginating()->getItemsPerPage()])
+            array_merge(
+                $filtering,
+                $data instanceof Criteria ? $data->getFiltering()->getFields() : []
+            )
         );
     }
 }

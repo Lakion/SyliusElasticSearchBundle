@@ -8,7 +8,7 @@
         <service id="lakion_sylius_elastic_search.filter_set_configuration_provider.composite" class="Lakion\SyliusElasticSearchBundle\Form\Configuration\Provider\FilterSetProvider">
             <call method="addFilterSetProvider">
                 <argument type="service">
-                    <service class="Lakion\SyliusElasticSearchBundle\Form\Configuration\Provider\FromConfigurationFilterSetProvider">
+                    <service class="Lakion\SyliusElasticSearchBundle\Form\Configuration\Provider\FromArrayFilterSetProvider">
                         <argument>%lakion_sylius_elastic_search.filter_sets%</argument>
                     </service>
                 </argument>

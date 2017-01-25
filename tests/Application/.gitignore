@@ -1,3 +1,6 @@
+/node_modules/
+
 /var/
 !/var/.gitkeep
+
 /web/

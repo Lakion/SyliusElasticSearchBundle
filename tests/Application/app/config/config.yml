@@ -27,9 +27,6 @@ framework:
         handler_id: ~
     test: ~
 
-swiftmailer:
-    disable_delivery: true
-
 doctrine:
     dbal:
         driver: "pdo_sqlite"
@@ -58,5 +55,25 @@ lakion_sylius_elastic_search:
                         option_code: sticker_size
                 product_price:
                     type: price
+                search:
+                    type: search
+        mugs:
+            filters:
+                mug_type:
+                    type: option
+                    options:
+                        option_code: mug_type
+                product_price:
+                        type: price
+                search:
+                    type: search
+        default:
+            filters:
+                price_range:
+                    type: price
+                search:
+                    type: search
+        global_search:
+            filters:
                 search:
                     type: search
