@@ -16,7 +16,7 @@
         "sylius/sylius": "dev-master",
 
         "friendsofsymfony/elastica-bundle": "^4.0@dev",
-        "ongr/elasticsearch-dsl": "^1.0"
+        "ongr/elasticsearch-dsl": "^2.0"
     },
     "require-dev": {
         "behat/behat": "^3.2",
