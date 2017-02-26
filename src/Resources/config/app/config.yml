@@ -81,7 +81,7 @@ fos_elastica:
                             type: "nested"
                             properties:
                                 path: { type: string }
-                                code: { type: string }
+                                type: { type: string }
                         enabled: { type: boolean }
                         isSimple: { type: boolean }
                     persistence:

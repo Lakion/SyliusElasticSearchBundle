@@ -128,7 +128,8 @@ final class SearchController
         if ($this->isHtmlRequest($request)) {
             $view->setTemplate($this->getTemplateFromRequest($request));
         }
-        $taxon = $this->taxonRepository->findOneBySlug($slug);
+        $locale = $this->shopperContext->getLocaleCode();
+        $taxon = $this->taxonRepository->findOneBySlug($slug, $locale);
 
         $form = $this->formFactory->create(
             FilterSetType::class,
