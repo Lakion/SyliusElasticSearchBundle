@@ -5,7 +5,7 @@ lakion_elastic_search_shop_product_index:
         _controller: lakion_sylius_elastic_search.controller.search:filterAction
         _sylius:
             template: "@LakionSyliusElasticSearch/Product/index.html.twig"
-            resource_class: Sylius\Component\Core\Model\Product
+            resource_class: "%sylius.model.product.class%"
             filter_set: mug_type_and_stickers_set
     requirements:
         slug: .+
@@ -17,7 +17,7 @@ lakion_elastic_search_shop_global_search:
         _controller: lakion_sylius_elastic_search.controller.search:renderFilterSetAction
         _sylius:
             template: "@LakionSyliusElasticSearch/Product/_globalSearch.html.twig"
-            resource_class: Sylius\Component\Core\Model\Product
+            resource_class: "%sylius.model.product.class%"
     requirements:
         slug: .+
 
@@ -28,7 +28,7 @@ sylius_shop_product_index:
         _controller: lakion_sylius_elastic_search.controller.search:filterByTaxonAction
         _sylius:
             template: "@LakionSyliusElasticSearch/Product/indexByTaxon.html.twig"
-            resource_class: Sylius\Component\Core\Model\Product
+            resource_class: "%sylius.model.product.class%"
             filter_set: mug_type_and_stickers_set
     requirements:
         slug: .+
