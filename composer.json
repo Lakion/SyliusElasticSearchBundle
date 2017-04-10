@@ -15,7 +15,7 @@
 
         "sylius/sylius": "dev-master",
 
-        "friendsofsymfony/elastica-bundle": "4.0.x-dev",
+        "friendsofsymfony/elastica-bundle": "^4.0",
         "ongr/elasticsearch-dsl": "^2.0"
     },
     "require-dev": {
