@@ -89,7 +89,7 @@ final class OptionCodeFilterType extends AbstractType implements DataTransformer
                 $query = $this->buildAggregation($productOptionValue->getCode())->toArray();
                 $result = $repository->createPaginatorAdapter($query);
                 $aggregation = $result->getAggregations();
-                $count = $aggregation['agg_'.$productOptionValue->getCode()]['buckets'][$productOptionValue->getCode()]['doc_count'];
+                $count = $aggregation[$productOptionValue->getCode()]['buckets'][$productOptionValue->getCode()]['doc_count'];
 
                 return sprintf('%s (%s)', $productOptionValue->getValue(), $count);
             },

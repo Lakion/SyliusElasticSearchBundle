@@ -6,7 +6,7 @@ imports:
     - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
     - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
-    - { resource: "@SyliusApiBundle/Resources/config/app/config.yml" }
+    - { resource: "@SyliusAdminApiBundle/Resources/config/app/config.yml" }
     - { resource: "@LakionSyliusElasticSearchBundle/Resources/config/app/config.yml" }
 
     - { resource: "security.yml" }
@@ -32,6 +32,18 @@ doctrine:
         driver: "pdo_sqlite"
         path: "%kernel.cache_dir%/db.sql"
         charset: UTF8
+
+fos_rest:
+    exception: ~
+    view:
+        formats:
+            json: true
+            xml:  true
+        empty_content: 204
+    format_listener:
+        rules:
+            - { path: '^/api', priorities: ['json', 'xml'], fallback_format: json, prefer_extension: true }
+            - { path: '^/', stop: true }
 
 sylius_resource:
     drivers:
