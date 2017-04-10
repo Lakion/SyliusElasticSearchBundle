@@ -43,9 +43,9 @@ final class OptionCodeFilterType extends AbstractType implements DataTransformer
      */
     private $productHasOptionCodeQueryFactory;
 
-	/**
-	 * @var string
-	 */
+    /**
+     * @var string
+     */
     private $productModelClass;
 
     /**
@@ -62,7 +62,7 @@ final class OptionCodeFilterType extends AbstractType implements DataTransformer
         RepositoryManagerInterface $repositoryManager,
         QueryFactoryInterface $productHasOptionCodeQueryFactory,
         SearchFactoryInterface $searchFactory,
-		$productModelClass
+        $productModelClass
     ) {
         $this->repositoryManager = $repositoryManager;
         $this->productHasOptionCodeQueryFactory = $productHasOptionCodeQueryFactory;
