@@ -20,7 +20,6 @@ use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Query\QueryFactoryIn
 use Lakion\SyliusElasticSearchBundle\Search\Elastic\Factory\Search\SearchFactoryInterface;
 use ONGR\ElasticsearchDSL\Aggregation\FiltersAggregation;
 use ONGR\ElasticsearchDSL\Search;
-use Sylius\Component\Core\Model\Product;
 use Sylius\Component\Product\Model\ProductOptionValue;
 use Sylius\Component\Product\Model\ProductOptionValueInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -44,6 +43,11 @@ final class OptionCodeFilterType extends AbstractType implements DataTransformer
      */
     private $productHasOptionCodeQueryFactory;
 
+	/**
+	 * @var string
+	 */
+    private $productModelClass;
+
     /**
      * @var SearchFactoryInterface
      */
@@ -57,11 +61,13 @@ final class OptionCodeFilterType extends AbstractType implements DataTransformer
     public function __construct(
         RepositoryManagerInterface $repositoryManager,
         QueryFactoryInterface $productHasOptionCodeQueryFactory,
-        SearchFactoryInterface $searchFactory
+        SearchFactoryInterface $searchFactory,
+		$productModelClass
     ) {
         $this->repositoryManager = $repositoryManager;
         $this->productHasOptionCodeQueryFactory = $productHasOptionCodeQueryFactory;
         $this->searchFactory = $searchFactory;
+        $this->productModelClass = $productModelClass;
     }
 
     /**
@@ -85,7 +91,7 @@ final class OptionCodeFilterType extends AbstractType implements DataTransformer
             'choice_label' => function (ProductOptionValue $productOptionValue) use ($options) {
 
                 /** @var Repository $repository */
-                $repository = $this->repositoryManager->getRepository(Product::class);
+                $repository = $this->repositoryManager->getRepository($this->productModelClass);
                 $query = $this->buildAggregation($productOptionValue->getCode())->toArray();
                 $result = $repository->createPaginatorAdapter($query);
                 $aggregation = $result->getAggregations();
