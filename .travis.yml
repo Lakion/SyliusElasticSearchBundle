@@ -7,8 +7,6 @@ php:
 
 addons:
     apt:
-        sources:
-            - elasticsearch-2.4
         packages:
             - elasticsearch
 
@@ -20,6 +18,7 @@ cache:
         - vendor
 
 before_install:
+    - curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.4.4/elasticsearch-2.4.4.deb && sudo dpkg -i --force-confnew elasticsearch-2.4.4.deb && sudo service elasticsearch restart
     - phpenv config-rm xdebug.ini || true
     - echo "memory_limit=4096M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
