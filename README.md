@@ -13,7 +13,7 @@ Elastic search for Sylius.
 2. Install elastic search server:
 
     ```bash
-    $ brew install elasticsearch@1.7
+    $ brew install elasticsearch@2.4
     ```
 
 3. Run elastic search server:

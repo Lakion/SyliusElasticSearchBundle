@@ -35,8 +35,6 @@ fos_elastica:
                             type: "nested"
                             properties:
                                 code: { type: string }
-                                availableOn: { type: date }
-                                availableUntil: { type: date }
                                 name: { type: string }
                                 onHand: { type: integer }
                                 onHold: { type: integer }
@@ -44,10 +42,7 @@ fos_elastica:
                                     type: "nested"
                                     properties:
                                         price: { type: integer }
-                                        channel:
-                                            type: "object"
-                                            properties:
-                                                code: { type: string }
+                                        channelCode: { type: string }
                                 optionValues:
                                     type: "nested"
                                     properties:
